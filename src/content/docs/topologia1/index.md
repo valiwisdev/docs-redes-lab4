@@ -1,0 +1,47 @@
+---
+title: Topologia 1 - RIPv1 y OSPF
+description: Esquema general, redes involucradas y tabla de direccionamiento para la topologia 1.
+sidebar:
+  label: Resumen
+---
+
+## Descripcion
+
+En esta topologia:
+
+- `R1` se ubica al centro.
+- `R2` se encuentra a la izquierda y conecta con `PC-1`.
+- `R3` se encuentra a la derecha y conecta con `PC-2`.
+
+## Redes
+
+- Enlace `R1 - R2`: `192.168.10.0/24`
+- Enlace `R1 - R3`: `192.168.20.0/24`
+- LAN izquierda: `192.168.30.0/24`
+- LAN derecha: `192.168.40.0/24`
+
+## Tabla de IPs
+
+| Dispositivo | Interfaz | IP | Mascara / Prefijo | Gateway |
+| --- | --- | --- | --- | --- |
+| R1 | G0/0 | 192.168.10.3 | 255.255.255.0 | N/A |
+| R1 | G0/1 | 192.168.20.3 | 255.255.255.0 | N/A |
+| R2 | G0/0 | 192.168.10.4 | 255.255.255.0 | N/A |
+| R2 | G0/1 | 192.168.30.1 | 255.255.255.0 | N/A |
+| R2 | Loopback 2 | 172.16.2.3 | 255.255.0.0 | N/A |
+| R3 | G0/0 | 192.168.20.4 | 255.255.255.0 | N/A |
+| R3 | G0/1 | 192.168.40.1 | 255.255.255.0 | N/A |
+| R3 | Loopback 3 | 172.17.2.3 | 255.255.0.0 | N/A |
+| PC-1 | NIC | 192.168.30.32 | 255.255.255.0 | 192.168.30.1 |
+| PC-2 | NIC | 192.168.40.32 | 255.255.255.0 | 192.168.40.1 |
+
+## Protocolos incluidos
+
+- [RIPv1](/topologia1/ripv1/)
+- [OSPF](/topologia1/ospf/)
+
+## Espacio para evidencias
+
+### Observaciones
+
+Agregue aqui notas sobre la implementacion, pruebas de conectividad o comportamiento del enrutamiento.

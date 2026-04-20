@@ -1,0 +1,46 @@
+---
+title: Topologia 3 - RIPng y OSPFv3
+description: Esquema general, redes IPv6 y tabla de direccionamiento para la topologia 3.
+sidebar:
+  label: Resumen
+---
+
+## Descripcion
+
+En esta topologia:
+
+- `R1` se encuentra en la parte superior y conecta con `R2` y `R3`.
+- `R2` desciende hacia `PC-1`.
+- `R3` desciende hacia `PC-2`.
+- Toda la topologia trabaja con `IPv6`.
+
+## Redes
+
+- Enlace `R1 - R2`: `2001:ABCD:1435:A1::/64`
+- Enlace `R1 - R3`: `2002:ABCD:1435:B1::/64`
+- LAN izquierda: `2002:ABCD:1435:C1::/64`
+- LAN derecha: `2002:ABCD:1435:D1::/64`
+
+## Tabla de IPs
+
+| Dispositivo | Interfaz | IPv6 | Gateway |
+| --- | --- | --- | --- |
+| R1 | G0/0 | 2001:ABCD:1435:A1::3/64 | N/A |
+| R1 | G0/1 | 2002:ABCD:1435:B1::3/64 | N/A |
+| R2 | G0/0 | 2001:ABCD:1435:A1::4/64 | N/A |
+| R2 | G0/1 | 2002:ABCD:1435:C1::1/64 | N/A |
+| R3 | G0/0 | 2002:ABCD:1435:B1::4/64 | N/A |
+| R3 | G0/1 | 2002:ABCD:1435:D1::1/64 | N/A |
+| PC-1 | NIC | 2002:ABCD:1435:C1::32/64 | 2002:ABCD:1435:C1::1/64 |
+| PC-2 | NIC | 2002:ABCD:1435:D1::32/64 | 2002:ABCD:1435:D1::1/64 |
+
+## Protocolos incluidos
+
+- [RIPng](/topologia3/ripng/)
+- [OSPFv3](/topologia3/ospfv3/)
+
+## Espacio para evidencias
+
+### Observaciones
+
+Agregue aqui notas sobre conectividad IPv6, anuncios y pruebas realizadas.
