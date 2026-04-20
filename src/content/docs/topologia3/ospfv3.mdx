@@ -3,7 +3,7 @@ title: OSPFv3
 description: Espacio de configuracion y evidencias para el protocolo OSPFv3 en la topologia 3.
 ---
 
-import InterfaceAliasBuilder from '../../../components/InterfaceAliasBuilder.astro';
+import DynamicCiscoCommands from '../../../components/DynamicCiscoCommands.astro';
 
 ## Objetivo
 
@@ -11,9 +11,7 @@ Documentar la configuracion de `OSPFv3` para los routers involucrados en la topo
 
 ## Interfaces dinamicas
 
-Use el siguiente constructor para adaptar el nombre de la interfaz al router que le toque.
-
-<InterfaceAliasBuilder />
+Seleccione una sola base de interfaz y se ajustan automaticamente los comandos de R1, R2 y R3.
 
 ## Redes involucradas
 
@@ -34,74 +32,35 @@ Use el siguiente constructor para adaptar el nombre de la interfaz al router que
 
 ## Comandos
 
-### Router R1
-
-```bash
-enable
-configure terminal
-hostname R1
-ipv6 unicast-routing
-ipv6 router ospf 1
-router-id 1.1.1.1
-exit
-interface <INT_R1_R2>
-ipv6 address 2001:ABCD:1435:A1::3/64
-ipv6 ospf 1 area 0
-no shutdown
-exit
-interface <INT_R1_R3>
-ipv6 address 2002:ABCD:1435:B1::3/64
-ipv6 ospf 1 area 0
-no shutdown
-end
-copy running-config startup-config
-```
-
-### Router R2
-
-```bash
-enable
-configure terminal
-hostname R2
-ipv6 unicast-routing
-ipv6 router ospf 1
-router-id 2.2.2.2
-exit
-interface <INT_R2_R1>
-ipv6 address 2001:ABCD:1435:A1::4/64
-ipv6 ospf 1 area 0
-no shutdown
-exit
-interface <INT_R2_PC1>
-ipv6 address 2002:ABCD:1435:C1::1/64
-ipv6 ospf 1 area 0
-no shutdown
-end
-copy running-config startup-config
-```
-
-### Router R3
-
-```bash
-enable
-configure terminal
-hostname R3
-ipv6 unicast-routing
-ipv6 router ospf 1
-router-id 3.3.3.3
-exit
-interface <INT_R3_R1>
-ipv6 address 2002:ABCD:1435:B1::4/64
-ipv6 ospf 1 area 0
-no shutdown
-exit
-interface <INT_R3_PC2>
-ipv6 address 2002:ABCD:1435:D1::1/64
-ipv6 ospf 1 area 0
-no shutdown
-end
-copy running-config startup-config
-```
+<DynamicCiscoCommands
+	title="OSPFv3 Topologia 3"
+	blocks={[
+		{
+			title: 'Router R1',
+			physicalInterfaces: [
+				{ id: 'INT_R1_R2', index: '0' },
+				{ id: 'INT_R1_R3', index: '1' },
+			],
+			template: ``,
+		},
+		{
+			title: 'Router R2',
+			physicalInterfaces: [
+				{ id: 'INT_R2_R1', index: '0' },
+				{ id: 'INT_R2_PC1', index: '1' },
+			],
+			template: ``,
+		},
+		{
+			title: 'Router R3',
+			physicalInterfaces: [
+				{ id: 'INT_R3_R1', index: '0' },
+				{ id: 'INT_R3_PC2', index: '1' },
+			],
+			template: ``,
+		},
+	]}
+/>
 
 ## Verificacion
 

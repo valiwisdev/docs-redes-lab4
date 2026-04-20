@@ -3,7 +3,7 @@ title: BGP
 description: Espacio de configuracion y evidencias para el protocolo BGP en la topologia 2.
 ---
 
-import InterfaceAliasBuilder from '../../../components/InterfaceAliasBuilder.astro';
+import DynamicCiscoCommands from '../../../components/DynamicCiscoCommands.astro';
 
 ## Objetivo
 
@@ -11,9 +11,7 @@ Documentar la configuracion de `BGP` entre los sistemas autonomos de la topologi
 
 ## Interfaces dinamicas
 
-Use el siguiente constructor para adaptar el nombre de la interfaz al router que le toque.
-
-<InterfaceAliasBuilder />
+Seleccione una sola base de interfaz y se ajustan automaticamente los comandos de R1, R2 y R3.
 
 ## Sistemas autonomos
 
@@ -41,73 +39,36 @@ Use el siguiente constructor para adaptar el nombre de la interfaz al router que
 
 ## Comandos
 
-### Router R1
-
-```bash
-enable
-configure terminal
-hostname R1
-interface <INT_R1_PC0>
-ip address 192.168.10.1 255.255.255.0
-no shutdown
-exit
-interface <INT_R1_R2>
-ip address 192.168.30.3 255.255.255.0
-no shutdown
-exit
-router bgp 100
-neighbor 192.168.30.23 remote-as 200
-network 192.168.10.0 mask 255.255.255.0
-end
-copy running-config startup-config
-```
-
-### Router R2
-
-```bash
-enable
-configure terminal
-hostname R2
-interface <INT_R2_R1>
-ip address 192.168.30.23 255.255.255.0
-no shutdown
-exit
-interface <INT_R2_R3>
-ip address 192.168.40.23 255.255.255.0
-no shutdown
-exit
-interface <INT_R2_PC1>
-ip address 192.168.60.1 255.255.255.0
-no shutdown
-exit
-router bgp 200
-neighbor 192.168.30.3 remote-as 100
-neighbor 192.168.40.3 remote-as 300
-network 192.168.60.0 mask 255.255.255.0
-end
-copy running-config startup-config
-```
-
-### Router R3
-
-```bash
-enable
-configure terminal
-hostname R3
-interface <INT_R3_R2>
-ip address 192.168.40.3 255.255.255.0
-no shutdown
-exit
-interface <INT_R3_PC2>
-ip address 192.168.50.1 255.255.255.0
-no shutdown
-exit
-router bgp 300
-neighbor 192.168.40.23 remote-as 200
-network 192.168.50.0 mask 255.255.255.0
-end
-copy running-config startup-config
-```
+<DynamicCiscoCommands
+	title="BGP Topologia 2"
+	blocks={[
+		{
+			title: 'Router R1',
+			physicalInterfaces: [
+				{ id: 'INT_R1_PC0', index: '0' },
+				{ id: 'INT_R1_R2', index: '1' },
+			],
+			template: ``,
+		},
+		{
+			title: 'Router R2',
+			physicalInterfaces: [
+				{ id: 'INT_R2_R1', index: '0' },
+				{ id: 'INT_R2_R3', index: '1' },
+				{ id: 'INT_R2_PC1', index: '2' },
+			],
+			template: ``,
+		},
+		{
+			title: 'Router R3',
+			physicalInterfaces: [
+				{ id: 'INT_R3_R2', index: '0' },
+				{ id: 'INT_R3_PC2', index: '1' },
+			],
+			template: ``,
+		},
+	]}
+/>
 
 ## Verificacion
 
