@@ -1,0 +1,154 @@
+---
+interface Props {
+	url: string;
+	title?: string;
+	height?: string;
+	page?: number;
+	toolbar?: string;
+	viewerUrl?: string;
+	openUrl?: string;
+}
+
+const {
+	url,
+	title = 'Diagrama draw.io',
+	height = '720px',
+	page,
+	toolbar = 'zoom layers tags lightbox',
+	viewerUrl,
+	openUrl,
+} = Astro.props;
+
+const buildViewerUrl = () => {
+	if (viewerUrl) return viewerUrl;
+
+	const base = new URL('https://viewer.diagrams.net/');
+	base.searchParams.set('tags', '{}');
+	base.searchParams.set('lightbox', '1');
+	base.searchParams.set('highlight', '0000ff');
+	base.searchParams.set('edit', '_blank');
+	base.searchParams.set('layers', '1');
+	base.searchParams.set('nav', '1');
+	base.searchParams.set('dark', 'auto');
+	base.searchParams.set('title', `${title}.drawio`);
+	if (typeof page === 'number') {
+		base.searchParams.set('page', String(page));
+	}
+
+	const hashConfig = {
+		toolbar,
+	};
+
+	return `${base.toString()}#U${encodeURIComponent(url)}#${encodeURIComponent(JSON.stringify(hashConfig))}`;
+};
+
+const resolvedViewerUrl = buildViewerUrl();
+const resolvedOpenUrl = openUrl ?? url;
+const helpId = `drawio-help-${Math.random().toString(36).slice(2, 10)}`;
+---
+
+<figure class="drawio-diagram">
+	<div class="drawio-diagram__header">
+		<strong>{title}</strong>
+		<div class="drawio-diagram__actions">
+			<a class="drawio-diagram__link" href={resolvedViewerUrl} target="_blank" rel="noreferrer">
+				Abrir visor completo
+			</a>
+			<a class="drawio-diagram__link" href={resolvedOpenUrl} target="_blank" rel="noreferrer">
+				Abrir en Drive
+			</a>
+		</div>
+	</div>
+
+	<p id={helpId} class="drawio-diagram__help">
+		Use el visor completo si necesita moverse con mayor comodidad. Dentro del diagrama puede hacer zoom,
+		arrastrar la vista y usar el lightbox para verlo con mas espacio.
+	</p>
+
+	<iframe
+		class="drawio-diagram__frame"
+		src={resolvedViewerUrl}
+		title={title}
+		tabindex="0"
+		aria-describedby={helpId}
+		loading="lazy"
+		referrerpolicy="no-referrer"
+		style={`height: ${height};`}
+	></iframe>
+</figure>
+
+<style>
+	.drawio-diagram {
+		margin: 1.5rem 0 2rem;
+		border: 1px solid var(--sl-color-gray-5);
+		border-radius: 1rem;
+		overflow: hidden;
+		background: var(--sl-color-bg-nav);
+		box-shadow: 0 18px 40px color-mix(in srgb, var(--sl-color-black) 10%, transparent);
+	}
+
+	.drawio-diagram__header {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 1rem;
+		padding: 0.9rem 1rem;
+		border-bottom: 1px solid var(--sl-color-gray-5);
+		background: color-mix(in srgb, var(--sl-color-text-accent) 8%, var(--sl-color-bg));
+	}
+
+	.drawio-diagram__actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.75rem;
+	}
+
+	.drawio-diagram__link {
+		display: inline-flex;
+		align-items: center;
+		min-height: 2.5rem;
+		padding: 0.5rem 0.85rem;
+		border: 1px solid var(--sl-color-gray-4);
+		border-radius: 999px;
+		background: color-mix(in srgb, var(--sl-color-white) 8%, transparent);
+		text-decoration: none;
+		font-size: 0.95rem;
+	}
+
+	.drawio-diagram__link:hover {
+		background: color-mix(in srgb, var(--sl-color-text-accent) 12%, var(--sl-color-bg));
+	}
+
+	.drawio-diagram__link:focus-visible {
+		outline: 3px solid var(--sl-color-text-accent);
+		outline-offset: 2px;
+	}
+
+	.drawio-diagram__help {
+		margin: 0;
+		padding: 0.85rem 1rem;
+		border-bottom: 1px solid var(--sl-color-gray-5);
+		background: color-mix(in srgb, var(--sl-color-bg) 85%, var(--sl-color-text-accent) 15%);
+		color: var(--sl-color-gray-2);
+		font-size: 0.95rem;
+	}
+
+	.drawio-diagram__frame {
+		display: block;
+		width: 100%;
+		border: 0;
+		background: var(--sl-color-bg-nav);
+	}
+
+	.drawio-diagram__frame:focus-visible {
+		outline: 3px solid var(--sl-color-text-accent);
+		outline-offset: -3px;
+	}
+
+	@media (max-width: 50rem) {
+		.drawio-diagram__header {
+			flex-direction: column;
+			align-items: flex-start;
+		}
+	}
+</style>
