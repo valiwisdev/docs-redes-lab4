@@ -56,6 +56,24 @@ show interfaces description
 show running-config | section interface
 ```
 
+## Comandos utiles
+
+Estos atajos son utiles para verificar conectividad `IPv6`, limpiar configuraciones y reiniciar servicios de enrutamiento.
+
+| Accion | Comando de ejemplo |
+| --- | --- |
+| Guardar configuracion | `copy running-config startup-config` |
+| Ver rutas IPv6 | `show ipv6 route` |
+| Ver protocolos IPv6 activos | `show ipv6 protocols` |
+| Reiniciar una interfaz | `interface g0/0`<br/>`shutdown`<br/>`no shutdown` |
+| Restaurar una interfaz a valores por defecto | `default interface g0/0` |
+| Quitar RIPng del router | `no ipv6 router rip REDLAB` |
+| Quitar OSPFv3 proceso 1 | `no ipv6 router ospf 1` |
+| Reiniciar el router | `reload` |
+| Borrar la configuracion guardada y reiniciar | `erase startup-config`<br/>`reload` |
+
+> Reemplace `REDLAB` por el nombre del proceso RIPng que este usando en la practica y ajuste `g0/0` segun la interfaz correspondiente.
+
 ## Protocolos incluidos
 
 - [RIPng](/topologia3/ripng/)
