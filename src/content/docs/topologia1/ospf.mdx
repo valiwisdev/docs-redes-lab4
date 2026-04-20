@@ -1,17 +1,17 @@
 ---
 title: OSPF
-description: Espacio de configuracion y evidencias para el protocolo OSPF en la topologia 1.
+description: Espacio de configuración y evidencias para el protocolo OSPF en la topología 1.
 ---
 
 import DynamicCiscoCommands from '../../../components/DynamicCiscoCommands.astro';
 
 ## Objetivo
 
-Documentar la configuracion de `OSPF` para los routers involucrados en la topologia 1.
+Documentar la configuración de `OSPF` para los routers involucrados en la topología 1.
 
-## Interfaces dinamicas
+## Interfaces dinámicas
 
-Seleccione una sola base de interfaz y se ajustan automaticamente los comandos de R1, R2 y R3.
+Seleccione una sola base de interfaz y se ajustan automáticamente los comandos de R1, R2 y R3.
 
 ## Redes a anunciar
 
@@ -35,7 +35,7 @@ Seleccione una sola base de interfaz y se ajustan automaticamente los comandos d
 ## Comandos
 
 <DynamicCiscoCommands
-	title="OSPF Topologia 1"
+	title="OSPF Topología 1"
 	blocks={[
 		{
 			title: 'Router R1',
@@ -117,12 +117,16 @@ copy running-config startup-config`,
 	]}
 />
 
-## Verificacion
+## Verificación
 
 ```txt
-# Pegue aqui comandos de verificacion, vecinos OSPF, tabla de rutas o pruebas
+PC1> ping 192.168.10.3
+PC1> ping 192.168.30.1
+PC1> ping 192.168.40.1
+PC1> ping 192.168.40.32
+
+PC2> ping 192.168.20.3
+PC2> ping 192.168.30.1
+PC2> ping 192.168.40.1
+PC2> ping 192.168.30.32
 ```
-
-## Evidencias y notas
-
-Agregue aqui observaciones sobre areas, adyacencias y propagacion de rutas.

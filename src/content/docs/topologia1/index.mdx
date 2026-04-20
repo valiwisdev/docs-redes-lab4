@@ -1,16 +1,17 @@
 ---
-title: Topologia 1 - RIPv1 y OSPF
-description: Esquema general, redes involucradas y tabla de direccionamiento para la topologia 1.
+title: Topología 1 - RIPv1 y OSPF
+description: Esquema general, redes involucradas y tabla de direccionamiento para la topología 1.
 sidebar:
   label: Resumen
 ---
 
 import DrawIoDiagram from '../../../components/DrawIoDiagram.astro';
 import PacketTracerDownloads from '../../../components/PacketTracerDownloads.astro';
+import { Tabs, TabItem } from '@astrojs/starlight/components';
 
-## Descripcion
+## Descripción
 
-En esta topologia:
+En esta topología:
 
 - `R1` se ubica al centro.
 - `R2` se encuentra a la izquierda y conecta con `PC-1`.
@@ -21,7 +22,7 @@ En esta topologia:
 <DrawIoDiagram
 	url="https://drive.google.com/uc?id=1IF_mVsADYf5AoXLwbWye55jKp95XswPe&export=download"
 	openUrl="https://drive.google.com/file/d/1IF_mVsADYf5AoXLwbWye55jKp95XswPe/view?usp=sharing"
-	title="Topologia 1"
+	title="Topología 1"
 	height="760px"
 	page={0}
 	toolbar="zoom layers tags lightbox"
@@ -57,13 +58,13 @@ show interfaces description
 show running-config | section interface
 ```
 
-## Comandos utiles
+## Comandos útiles
 
-Use estos comandos cuando necesite ajustar rapidamente la configuracion del router durante la practica.
+Use estos comandos cuando necesite ajustar rápidamente la configuración del router durante la práctica.
 
-| Accion | Comando de ejemplo |
+| Acción | Comando de ejemplo |
 | --- | --- |
-| Guardar configuracion | `copy running-config startup-config` |
+| Guardar configuración | `copy running-config startup-config` |
 | Ver rutas aprendidas | `show ip route` |
 | Ver protocolos activos | `show ip protocols` |
 | Reiniciar una interfaz | `interface g0/0`<br/>`shutdown`<br/>`no shutdown` |
@@ -71,7 +72,7 @@ Use estos comandos cuando necesite ajustar rapidamente la configuracion del rout
 | Quitar RIPv1 del router | `no router rip` |
 | Quitar OSPF proceso 1 | `no router ospf 1` |
 | Reiniciar el router | `reload` |
-| Borrar la configuracion guardada y reiniciar | `erase startup-config`<br/>`reload` |
+| Borrar la configuración guardada y reiniciar | `erase startup-config`<br/>`reload` |
 
 > Cambie `g0/0` por la interfaz que corresponda. Use `erase startup-config` solo si desea dejar el router limpio para empezar de nuevo.
 
@@ -83,24 +84,72 @@ Use estos comandos cuando necesite ajustar rapidamente la configuracion del rout
 ## Archivos de Packet Tracer
 
 <PacketTracerDownloads
-	title="Descargas de la Topologia 1"
-	description="Aqui puede descargar los archivos .pkt que corresponden a las practicas de RIPv1 y OSPF."
+	title="Descargas de la Topología 1"
+	description="Aquí puede descargar los archivos .pkt que corresponden a las prácticas de RIPv1 y OSPF."
 	items={[
 		{
-			title: 'Topologia 1 - RIPv1',
+			title: 'Topología 1 - RIPv1',
 			href: '/cisco/TP1 - RIPv1.pkt',
-			description: 'Archivo base para la practica de enrutamiento dinamico con RIPv1.',
+			description: 'Archivo base para la práctica de enrutamiento dinámico con RIPv1.',
 		},
 		{
-			title: 'Topologia 1 - OSPF',
+			title: 'Topología 1 - OSPF',
 			href: '/cisco/TP1 - OSPF.pkt',
-			description: 'Archivo base para la practica de configuracion y pruebas con OSPF.',
+			description: 'Archivo base para la práctica de configuración y pruebas con OSPF.',
 		},
 	]}
 />
 
-## Espacio para evidencias
+## Archivos de Wireshark
 
-### Observaciones
+<Tabs>
+	<TabItem label="RIPv1">
+		<PacketTracerDownloads
+			title="Capturas de Wireshark - RIPv1"
+			description="Capturas asociadas a las pruebas de RIPv1 en la topología 1."
+			items={[
+				{
+					title: 'Captura PC1 a PC2',
+					href: '/wireshark/TP1/RIPv1/PC1-PC2.pcap',
+					description: 'Captura de tráfico entre los hosts finales durante la práctica de RIPv1.',
+				},
+				{
+					title: 'Captura PC1 a R1, R2 y R3',
+					href: '/wireshark/TP1/RIPv1/PC1-R123.pcap',
+					description: 'Captura orientada a revisar el tráfico entre PC1 y los routers de la topología.',
+				},
+				{
+					title: 'Captura PC2 a R1, R2 y R3',
+					href: '/wireshark/TP1/RIPv1/PC2-R123.pcap',
+					description: 'Captura orientada a revisar el tráfico entre PC2 y los routers de la topología.',
+				},
+			]}
+			downloadLabel="Descargar captura"
+		/>
+	</TabItem>
 
-Agregue aqui notas sobre la implementacion, pruebas de conectividad o comportamiento del enrutamiento.
+	<TabItem label="OSPF">
+		<PacketTracerDownloads
+			title="Capturas de Wireshark - OSPF"
+			description="Capturas asociadas a las pruebas de OSPF en la topología 1."
+			items={[
+				{
+					title: 'Captura PC1 a PC2',
+					href: '/wireshark/TP1/OSPF/PC1-PC2.pcap',
+					description: 'Captura de tráfico entre los hosts finales durante la práctica de OSPF.',
+				},
+				{
+					title: 'Captura PC1 a R1, R2 y R3',
+					href: '/wireshark/TP1/OSPF/PC1-R123.pcap',
+					description: 'Captura orientada a revisar el tráfico entre PC1 y los routers de la topología.',
+				},
+				{
+					title: 'Captura PC2 a R1, R2 y R3',
+					href: '/wireshark/TP1/OSPF/PC2-R123.pcap',
+					description: 'Captura orientada a revisar el tráfico entre PC2 y los routers de la topología.',
+				},
+			]}
+			downloadLabel="Descargar captura"
+		/>
+	</TabItem>
+</Tabs>

@@ -1,27 +1,28 @@
 ---
-title: Topologia 3 - RIPng y OSPFv3
-description: Esquema general, redes IPv6 y tabla de direccionamiento para la topologia 3.
+title: Topología 3 - RIPng y OSPFv3
+description: Esquema general, redes IPv6 y tabla de direccionamiento para la topología 3.
 sidebar:
   label: Resumen
 ---
 
 import DrawIoDiagram from '../../../components/DrawIoDiagram.astro';
+import PacketTracerDownloads from '../../../components/PacketTracerDownloads.astro';
 
-## Descripcion
+## Descripción
 
-En esta topologia:
+En esta topología:
 
 - `R1` se encuentra en la parte superior y conecta con `R2` y `R3`.
 - `R2` desciende hacia `PC-1`.
 - `R3` desciende hacia `PC-2`.
-- Toda la topologia trabaja con `IPv6`.
+- Toda la topología trabaja con `IPv6`.
 
 ## Diagrama
 
 <DrawIoDiagram
 	url="https://drive.google.com/uc?id=1IF_mVsADYf5AoXLwbWye55jKp95XswPe&export=download"
 	openUrl="https://drive.google.com/file/d/1IF_mVsADYf5AoXLwbWye55jKp95XswPe/view?usp=sharing"
-	title="Topologia 3"
+	title="Topología 3"
 	height="760px"
 	page={2}
 	toolbar="zoom layers tags lightbox"
@@ -56,13 +57,13 @@ show interfaces description
 show running-config | section interface
 ```
 
-## Comandos utiles
+## Comandos útiles
 
-Estos atajos son utiles para verificar conectividad `IPv6`, limpiar configuraciones y reiniciar servicios de enrutamiento.
+Estos atajos son útiles para verificar conectividad `IPv6`, limpiar configuraciones y reiniciar servicios de enrutamiento.
 
-| Accion | Comando de ejemplo |
+| Acción | Comando de ejemplo |
 | --- | --- |
-| Guardar configuracion | `copy running-config startup-config` |
+| Guardar configuración | `copy running-config startup-config` |
 | Ver rutas IPv6 | `show ipv6 route` |
 | Ver protocolos IPv6 activos | `show ipv6 protocols` |
 | Reiniciar una interfaz | `interface g0/0`<br/>`shutdown`<br/>`no shutdown` |
@@ -70,17 +71,30 @@ Estos atajos son utiles para verificar conectividad `IPv6`, limpiar configuracio
 | Quitar RIPng del router | `no ipv6 router rip REDLAB` |
 | Quitar OSPFv3 proceso 1 | `no ipv6 router ospf 1` |
 | Reiniciar el router | `reload` |
-| Borrar la configuracion guardada y reiniciar | `erase startup-config`<br/>`reload` |
+| Borrar la configuración guardada y reiniciar | `erase startup-config`<br/>`reload` |
 
-> Reemplace `REDLAB` por el nombre del proceso RIPng que este usando en la practica y ajuste `g0/0` segun la interfaz correspondiente.
+> Reemplace `REDLAB` por el nombre del proceso RIPng que esté usando en la práctica y ajuste `g0/0` según la interfaz correspondiente.
 
 ## Protocolos incluidos
 
 - [RIPng](/topologia3/ripng/)
 - [OSPFv3](/topologia3/ospfv3/)
 
-## Espacio para evidencias
+## Archivos de Packet Tracer
 
-### Observaciones
+<PacketTracerDownloads
+	title="Descargas de la Topología 3"
+	description="Aquí podrá descargar los archivos .pkt de la topología 3 cuando estén disponibles."
+	items={[]}
+	emptyMessage="Aún no se han cargado archivos de Packet Tracer para esta topología."
+/>
 
-Agregue aqui notas sobre conectividad IPv6, anuncios y pruebas realizadas.
+## Archivos de Wireshark
+
+<PacketTracerDownloads
+	title="Capturas de Wireshark - Topología 3"
+	description="En esta sección se publicarán las capturas o trazas de Wireshark asociadas a las pruebas IPv6."
+	items={[]}
+	emptyMessage="Aún no se han cargado archivos de Wireshark para esta topología."
+	downloadLabel="Descargar captura"
+/>

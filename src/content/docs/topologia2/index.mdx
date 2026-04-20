@@ -1,26 +1,27 @@
 ---
-title: Topologia 2 - BGP
-description: Esquema general, sistemas autonomos y tabla de direccionamiento para la topologia 2.
+title: Topología 2 - BGP
+description: Esquema general, sistemas autónomos y tabla de direccionamiento para la topología 2.
 sidebar:
   label: Resumen
 ---
 
 import DrawIoDiagram from '../../../components/DrawIoDiagram.astro';
+import PacketTracerDownloads from '../../../components/PacketTracerDownloads.astro';
 
-## Descripcion
+## Descripción
 
-En esta topologia:
+En esta topología:
 
-- `R2` actua como router central.
+- `R2` actúa como router central.
 - `R2` se conecta con `R1`, `R3` y una LAN propia.
-- Se manejan tres sistemas autonomos: `ASN 100`, `ASN 200` y `ASN 300`.
+- Se manejan tres sistemas autónomos: `ASN 100`, `ASN 200` y `ASN 300`.
 
 ## Diagrama
 
 <DrawIoDiagram
 	url="https://drive.google.com/uc?id=1IF_mVsADYf5AoXLwbWye55jKp95XswPe&export=download"
 	openUrl="https://drive.google.com/file/d/1IF_mVsADYf5AoXLwbWye55jKp95XswPe/view?usp=sharing"
-	title="Topologia 2"
+	title="Topología 2"
 	height="760px"
 	page={1}
 	toolbar="zoom layers tags lightbox"
@@ -57,13 +58,13 @@ show interfaces description
 show running-config | section interface
 ```
 
-## Comandos utiles
+## Comandos útiles
 
-Estos comandos ayudan a revisar, corregir o limpiar la configuracion durante las pruebas con `BGP`.
+Estos comandos ayudan a revisar, corregir o limpiar la configuración durante las pruebas con `BGP`.
 
-| Accion | Comando de ejemplo |
+| Acción | Comando de ejemplo |
 | --- | --- |
-| Guardar configuracion | `copy running-config startup-config` |
+| Guardar configuración | `copy running-config startup-config` |
 | Ver tabla de rutas | `show ip route` |
 | Ver vecinos BGP | `show ip bgp summary` |
 | Reiniciar una interfaz | `interface g0/1`<br/>`shutdown`<br/>`no shutdown` |
@@ -72,16 +73,29 @@ Estos comandos ayudan a revisar, corregir o limpiar la configuracion durante las
 | Quitar proceso BGP en `ASN 200` | `no router bgp 200` |
 | Quitar proceso BGP en `ASN 300` | `no router bgp 300` |
 | Reiniciar el router | `reload` |
-| Borrar la configuracion guardada y reiniciar | `erase startup-config`<br/>`reload` |
+| Borrar la configuración guardada y reiniciar | `erase startup-config`<br/>`reload` |
 
-> Cambie `g0/1` por la interfaz real del router. El numero de AS debe coincidir con el equipo que este configurando.
+> Cambie `g0/1` por la interfaz real del router. El número de AS debe coincidir con el equipo que esté configurando.
 
 ## Protocolo incluido
 
 - [BGP](/topologia2/bgp/)
 
-## Espacio para evidencias
+## Archivos de Packet Tracer
 
-### Observaciones
+<PacketTracerDownloads
+	title="Descargas de la Topología 2"
+	description="Aquí podrá descargar los archivos .pkt de la topología 2 cuando estén disponibles."
+	items={[]}
+	emptyMessage="Aún no se han cargado archivos de Packet Tracer para esta topología."
+/>
 
-Agregue aqui notas sobre vecindades BGP, anuncios recibidos y pruebas entre AS.
+## Archivos de Wireshark
+
+<PacketTracerDownloads
+	title="Capturas de Wireshark - Topología 2"
+	description="En esta sección se publicarán las capturas o trazas de Wireshark asociadas a las pruebas de BGP."
+	items={[]}
+	emptyMessage="Aún no se han cargado archivos de Wireshark para esta topología."
+	downloadLabel="Descargar captura"
+/>

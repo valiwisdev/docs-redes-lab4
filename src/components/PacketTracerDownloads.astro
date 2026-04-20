@@ -9,12 +9,16 @@ interface Props {
 	title?: string;
 	description?: string;
 	items: DownloadItem[];
+	emptyMessage?: string;
+	downloadLabel?: string;
 }
 
 const {
 	title = 'Archivos de Packet Tracer',
 	description = 'Descargue la topologia base o la version resuelta segun lo que necesite para el laboratorio.',
 	items = [],
+	emptyMessage = 'No hay archivos disponibles en este momento.',
+	downloadLabel = 'Descargar archivo',
 } = Astro.props;
 ---
 
@@ -28,7 +32,7 @@ const {
 	</p>
 
 	<div class="packet-tracer-downloads__grid">
-		{
+		{items.length > 0 ? (
 			items.map((item) => (
 				<article class="packet-tracer-downloads__card">
 					<div class="packet-tracer-downloads__content">
@@ -37,11 +41,15 @@ const {
 					</div>
 
 					<a class="packet-tracer-downloads__link" href={item.href} download>
-						Descargar archivo
+						{downloadLabel}
 					</a>
 				</article>
 			))
-		}
+		) : (
+			<article class="packet-tracer-downloads__empty">
+				<p>{emptyMessage}</p>
+			</article>
+		)}
 	</div>
 </figure>
 
@@ -90,6 +98,19 @@ const {
 		border: 1px solid var(--sl-color-gray-5);
 		border-radius: 0.85rem;
 		background: color-mix(in srgb, var(--sl-color-bg) 70%, var(--sl-color-bg-nav));
+	}
+
+	.packet-tracer-downloads__empty {
+		padding: 1rem;
+		border: 1px dashed var(--sl-color-gray-4);
+		border-radius: 0.85rem;
+		background: color-mix(in srgb, var(--sl-color-bg) 78%, var(--sl-color-bg-nav));
+		text-align: center;
+		color: var(--sl-color-gray-2);
+	}
+
+	.packet-tracer-downloads__empty p {
+		margin: 0;
 	}
 
 	.packet-tracer-downloads__content strong {
