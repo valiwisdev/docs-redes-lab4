@@ -1,0 +1,140 @@
+---
+interface ChecklistItem {
+	label: string;
+	done?: boolean;
+}
+
+interface Props {
+	title?: string;
+	description?: string;
+	items: ChecklistItem[];
+}
+
+const {
+	title = 'Checklist de avance',
+	description = 'Resumen rapido de lo que ya esta disponible en esta seccion.',
+	items = [],
+} = Astro.props;
+---
+
+<section class="progress-checklist" aria-labelledby="progress-checklist-title">
+	<div class="progress-checklist__header">
+		<h3 id="progress-checklist-title">{title}</h3>
+		<p>{description}</p>
+	</div>
+
+	<ul class="progress-checklist__list">
+		{items.map((item) => (
+			<li class:list={['progress-checklist__item', item.done ? 'is-done' : 'is-pending']}>
+				<span class="progress-checklist__icon" aria-hidden="true">{item.done ? '✓' : '○'}</span>
+				<span class="progress-checklist__label">{item.label}</span>
+				<span class="progress-checklist__status">{item.done ? 'Listo' : 'Pendiente'}</span>
+			</li>
+		))}
+	</ul>
+</section>
+
+<style>
+	.progress-checklist {
+		margin: 1.5rem 0 2rem;
+		border: 1px solid var(--sl-color-gray-5);
+		border-radius: 1rem;
+		background:
+			linear-gradient(
+				145deg,
+				color-mix(in srgb, var(--sl-color-text-accent) 12%, var(--sl-color-bg)) 0%,
+				var(--sl-color-bg-nav) 100%
+			);
+		box-shadow: 0 18px 40px color-mix(in srgb, var(--sl-color-black) 10%, transparent);
+		overflow: hidden;
+	}
+
+	.progress-checklist__header {
+		padding: 1rem;
+		border-bottom: 1px solid var(--sl-color-gray-5);
+	}
+
+	.progress-checklist__header h3 {
+		margin: 0;
+		font-size: 1rem;
+	}
+
+	.progress-checklist__header p {
+		margin: 0.45rem 0 0;
+		color: var(--sl-color-gray-2);
+		font-size: 0.95rem;
+	}
+
+	.progress-checklist__list {
+		list-style: none;
+		margin: 0;
+		padding: 1rem;
+		display: grid;
+		gap: 0.75rem;
+	}
+
+	.progress-checklist__item {
+		display: grid;
+		grid-template-columns: auto 1fr auto;
+		align-items: center;
+		gap: 0.8rem;
+		padding: 0.9rem 1rem;
+		border-radius: 0.85rem;
+		border: 1px solid var(--sl-color-gray-5);
+		background: color-mix(in srgb, var(--sl-color-bg) 78%, transparent);
+	}
+
+	.progress-checklist__icon {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 1.6rem;
+		height: 1.6rem;
+		border-radius: 999px;
+		font-size: 0.95rem;
+		font-weight: 700;
+	}
+
+	.progress-checklist__label {
+		font-size: 0.98rem;
+	}
+
+	.progress-checklist__status {
+		padding: 0.28rem 0.7rem;
+		border-radius: 999px;
+		font-size: 0.8rem;
+		font-weight: 600;
+		letter-spacing: 0.02em;
+	}
+
+	.progress-checklist__item.is-done .progress-checklist__icon {
+		background: color-mix(in srgb, #1f9d55 18%, transparent);
+		color: #1f9d55;
+	}
+
+	.progress-checklist__item.is-done .progress-checklist__status {
+		background: color-mix(in srgb, #1f9d55 18%, transparent);
+		color: #1f9d55;
+	}
+
+	.progress-checklist__item.is-pending .progress-checklist__icon {
+		background: color-mix(in srgb, #c27c19 18%, transparent);
+		color: #c27c19;
+	}
+
+	.progress-checklist__item.is-pending .progress-checklist__status {
+		background: color-mix(in srgb, #c27c19 18%, transparent);
+		color: #c27c19;
+	}
+
+	@media (max-width: 40rem) {
+		.progress-checklist__item {
+			grid-template-columns: auto 1fr;
+		}
+
+		.progress-checklist__status {
+			grid-column: 1 / -1;
+			justify-self: start;
+		}
+	}
+</style>

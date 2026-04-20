@@ -7,6 +7,7 @@ sidebar:
 
 import DrawIoDiagram from '../../../components/DrawIoDiagram.astro';
 import PacketTracerDownloads from '../../../components/PacketTracerDownloads.astro';
+import ProgressChecklist from '../../../components/ProgressChecklist.astro';
 
 ## Descripción
 
@@ -15,6 +16,22 @@ En esta topología:
 - `R2` actúa como router central.
 - `R2` se conecta con `R1`, `R3` y una LAN propia.
 - Se manejan tres sistemas autónomos: `ASN 100`, `ASN 200` y `ASN 300`.
+
+## Checklist
+
+<ProgressChecklist
+	title="Lo que ya esta en Topologia 2"
+	description="Resumen del material ya cargado y lo que aun falta publicar."
+	items={[
+		{ label: 'Resumen general de la topologia', done: true },
+		{ label: 'Diagrama integrado en la pagina', done: true },
+		{ label: 'Tabla de direcciones IP', done: true },
+		{ label: 'Guia de comandos utiles', done: true },
+		{ label: 'Seccion del protocolo BGP', done: true },
+		{ label: 'Archivos de Packet Tracer', done: false },
+		{ label: 'Capturas de Wireshark', done: false },
+	]}
+/>
 
 ## Diagrama
 

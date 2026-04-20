@@ -7,6 +7,7 @@ sidebar:
 
 import DrawIoDiagram from '../../../components/DrawIoDiagram.astro';
 import PacketTracerDownloads from '../../../components/PacketTracerDownloads.astro';
+import ProgressChecklist from '../../../components/ProgressChecklist.astro';
 
 ## Descripción
 
@@ -16,6 +17,23 @@ En esta topología:
 - `R2` desciende hacia `PC-1`.
 - `R3` desciende hacia `PC-2`.
 - Toda la topología trabaja con `IPv6`.
+
+## Checklist
+
+<ProgressChecklist
+	title="Lo que ya esta en Topologia 3"
+	description="Estado actual del material preparado para la practica con IPv6."
+	items={[
+		{ label: 'Resumen general de la topologia', done: true },
+		{ label: 'Diagrama integrado en la pagina', done: true },
+		{ label: 'Tabla de direcciones IPv6', done: true },
+		{ label: 'Guia de comandos utiles', done: true },
+		{ label: 'Seccion del protocolo RIPng', done: true },
+		{ label: 'Seccion del protocolo OSPFv3', done: true },
+		{ label: 'Archivos de Packet Tracer', done: false },
+		{ label: 'Capturas de Wireshark', done: false },
+	]}
+/>
 
 ## Diagrama
 

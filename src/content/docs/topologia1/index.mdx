@@ -7,6 +7,7 @@ sidebar:
 
 import DrawIoDiagram from '../../../components/DrawIoDiagram.astro';
 import PacketTracerDownloads from '../../../components/PacketTracerDownloads.astro';
+import ProgressChecklist from '../../../components/ProgressChecklist.astro';
 import { Tabs, TabItem } from '@astrojs/starlight/components';
 
 ## Descripción
@@ -16,6 +17,23 @@ En esta topología:
 - `R1` se ubica al centro.
 - `R2` se encuentra a la izquierda y conecta con `PC-1`.
 - `R3` se encuentra a la derecha y conecta con `PC-2`.
+
+## Checklist
+
+<ProgressChecklist
+	title="Lo que ya esta en Topologia 1"
+	description="Estado actual del contenido y archivos publicados para esta practica."
+	items={[
+		{ label: 'Resumen general de la topologia', done: true },
+		{ label: 'Diagrama integrado en la pagina', done: true },
+		{ label: 'Tabla de direcciones IP', done: true },
+		{ label: 'Guia de comandos utiles', done: true },
+		{ label: 'Seccion del protocolo RIPv1', done: true },
+		{ label: 'Seccion del protocolo OSPF', done: true },
+		{ label: 'Archivos de Packet Tracer', done: true },
+		{ label: 'Capturas de Wireshark', done: true },
+	]}
+/>
 
 ## Diagrama
 
