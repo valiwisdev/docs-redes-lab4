@@ -6,6 +6,7 @@ sidebar:
 ---
 
 import DrawIoDiagram from '../../../components/DrawIoDiagram.astro';
+import PacketTracerDownloads from '../../../components/PacketTracerDownloads.astro';
 
 ## Descripcion
 
@@ -60,6 +61,25 @@ show running-config | section interface
 
 - [RIPv1](/topologia1/ripv1/)
 - [OSPF](/topologia1/ospf/)
+
+## Archivos de Packet Tracer
+
+<PacketTracerDownloads
+	title="Descargas de la Topologia 1"
+	description="Aqui puede descargar los archivos .pkt que corresponden a las practicas de RIPv1 y OSPF."
+	items={[
+		{
+			title: 'Topologia 1 - RIPv1',
+			href: '/cisco/TP1 - RIPv1.pkt',
+			description: 'Archivo base para la practica de enrutamiento dinamico con RIPv1.',
+		},
+		{
+			title: 'Topologia 1 - OSPF',
+			href: '/cisco/TP1 - OSPF.pkt',
+			description: 'Archivo base para la practica de configuracion y pruebas con OSPF.',
+		},
+	]}
+/>
 
 ## Espacio para evidencias
 
