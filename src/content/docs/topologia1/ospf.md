@@ -9,9 +9,22 @@ Documentar la configuracion de `OSPF` para los routers involucrados en la topolo
 
 ## Redes a anunciar
 
-- `192.168.20.0/24`
-- `192.168.40.0/24`
-- `172.17.0.0/16`
+### Router R1
+
+- `G0/0`: `192.168.10.3/24`
+- `G0/1`: `192.168.20.3/24`
+
+### Router R2
+
+- `G0/0`: `192.168.10.4/24`
+- `G0/1`: `192.168.30.1/24`
+- `Loopback 2`: `172.16.2.3/16`
+
+### Router R3
+
+- `G0/0`: `192.168.20.4/24`
+- `G0/1`: `192.168.40.1/24`
+- `Loopback 3`: `172.17.2.3/16`
 
 ## Comandos
 
@@ -19,6 +32,12 @@ Documentar la configuracion de `OSPF` para los routers involucrados en la topolo
 
 ```txt
 # Pegue aqui los comandos de configuracion de OSPF para R1
+```
+
+### Router R2
+
+```txt
+# Pegue aqui los comandos de configuracion de OSPF para R2
 ```
 
 ### Router R3

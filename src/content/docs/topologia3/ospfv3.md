@@ -9,8 +9,20 @@ Documentar la configuracion de `OSPFv3` para los routers involucrados en la topo
 
 ## Redes involucradas
 
-- `2002:ABCD:1435:B1::/64`
-- `2002:ABCD:1435:D1::/64`
+### Router R1
+
+- `G0/0`: `2001:ABCD:1435:A1::3/64`
+- `G0/1`: `2002:ABCD:1435:B1::3/64`
+
+### Router R2
+
+- `G0/0`: `2001:ABCD:1435:A1::4/64`
+- `G0/1`: `2002:ABCD:1435:C1::1/64`
+
+### Router R3
+
+- `G0/0`: `2002:ABCD:1435:B1::4/64`
+- `G0/1`: `2002:ABCD:1435:D1::1/64`
 
 ## Comandos
 
@@ -18,6 +30,12 @@ Documentar la configuracion de `OSPFv3` para los routers involucrados en la topo
 
 ```txt
 # Pegue aqui los comandos de configuracion de OSPFv3 para R1
+```
+
+### Router R2
+
+```txt
+# Pegue aqui los comandos de configuracion de OSPFv3 para R2
 ```
 
 ### Router R3

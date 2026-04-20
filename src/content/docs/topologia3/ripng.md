@@ -9,8 +9,20 @@ Documentar la configuracion de `RIPng` para los routers involucrados en la topol
 
 ## Redes involucradas
 
-- `2001:ABCD:1435:A1::/64`
-- `2002:ABCD:1435:C1::/64`
+### Router R1
+
+- `G0/0`: `2001:ABCD:1435:A1::3/64`
+- `G0/1`: `2002:ABCD:1435:B1::3/64`
+
+### Router R2
+
+- `G0/0`: `2001:ABCD:1435:A1::4/64`
+- `G0/1`: `2002:ABCD:1435:C1::1/64`
+
+### Router R3
+
+- `G0/0`: `2002:ABCD:1435:B1::4/64`
+- `G0/1`: `2002:ABCD:1435:D1::1/64`
 
 ## Comandos
 
@@ -24,6 +36,12 @@ Documentar la configuracion de `RIPng` para los routers involucrados en la topol
 
 ```txt
 # Pegue aqui los comandos de configuracion de RIPng para R2
+```
+
+### Router R3
+
+```txt
+# Pegue aqui los comandos de configuracion de RIPng para R3
 ```
 
 ## Verificacion
