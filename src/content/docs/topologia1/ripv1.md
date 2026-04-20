@@ -30,20 +30,73 @@ Documentar la configuracion de `RIPv1` para los routers involucrados en la topol
 
 ### Router R1
 
-```txt
-# Pegue aqui los comandos de configuracion de RIPv1 para R1
+```bash
+enable
+configure terminal
+hostname R1
+interface g0/0
+ip address 192.168.10.3 255.255.255.0
+no shutdown
+exit
+interface g0/1
+ip address 192.168.20.3 255.255.255.0
+no shutdown
+exit
+router rip
+network 192.168.10.0
+network 192.168.20.0
+end
+copy running-config startup-config
 ```
 
 ### Router R2
 
-```txt
-# Pegue aqui los comandos de configuracion de RIPv1 para R2
+```bash
+enable
+configure terminal
+hostname R2
+interface g0/0
+ip address 192.168.10.4 255.255.255.0
+no shutdown
+exit
+interface g0/1
+ip address 192.168.30.1 255.255.255.0
+no shutdown
+exit
+interface loopback 2
+ip address 172.16.2.3 255.255.0.0
+exit
+router rip
+network 192.168.10.0
+network 192.168.30.0
+network 172.16.0.0
+end
+copy running-config startup-config
 ```
 
 ### Router R3
 
-```txt
-# Pegue aqui los comandos de configuracion de RIPv1 para R3
+```bash
+enable
+configure terminal
+hostname R3
+interface g0/0
+ip address 192.168.20.4 255.255.255.0
+no shutdown
+exit
+interface g0/1
+ip address 192.168.40.1 255.255.255.0
+no shutdown
+exit
+interface loopback 3
+ip address 172.17.2.3 255.255.0.0
+exit
+router rip
+network 192.168.20.0
+network 192.168.40.0
+network 172.17.0.0
+end
+copy running-config startup-config
 ```
 
 ## Verificacion
