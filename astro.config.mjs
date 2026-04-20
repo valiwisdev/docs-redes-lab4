@@ -14,6 +14,7 @@ export default defineConfig({
 				{
 					label: 'Laboratorio',
 					items: [
+						{ label: 'Material de apoyo', link: '/material-apoyo/' },
 						{
 							label: 'Topologia 1',
 							items: [

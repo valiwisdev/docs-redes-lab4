@@ -1,0 +1,104 @@
+---
+interface Props {
+	url: string;
+	title: string;
+	height?: string;
+}
+
+const { url, title, height = '780px' } = Astro.props;
+const helpId = `pdf-help-${Math.random().toString(36).slice(2, 10)}`;
+const viewerUrl = `${url}#view=FitH`;
+---
+
+<figure class="pdf-viewer">
+	<div class="pdf-viewer__header">
+		<strong>{title}</strong>
+		<a class="pdf-viewer__link" href={url} target="_blank" rel="noreferrer">
+			Abrir PDF en otra pestana
+		</a>
+	</div>
+
+	<p id={helpId} class="pdf-viewer__help">
+		Si el visor integrado no carga en su navegador, abra el PDF en otra pestana para verlo completo o descargarlo.
+	</p>
+
+	<iframe
+		class="pdf-viewer__frame"
+		src={viewerUrl}
+		title={title}
+		tabindex="0"
+		aria-describedby={helpId}
+		loading="lazy"
+		style={`height: ${height};`}
+	></iframe>
+</figure>
+
+<style>
+	.pdf-viewer {
+		margin: 1.5rem 0 2rem;
+		border: 1px solid var(--sl-color-gray-5);
+		border-radius: 1rem;
+		overflow: hidden;
+		background: var(--sl-color-bg-nav);
+		box-shadow: 0 18px 40px color-mix(in srgb, var(--sl-color-black) 10%, transparent);
+	}
+
+	.pdf-viewer__header {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 1rem;
+		padding: 0.9rem 1rem;
+		border-bottom: 1px solid var(--sl-color-gray-5);
+		background: color-mix(in srgb, var(--sl-color-text-accent) 8%, var(--sl-color-bg));
+	}
+
+	.pdf-viewer__link {
+		display: inline-flex;
+		align-items: center;
+		min-height: 2.5rem;
+		padding: 0.5rem 0.85rem;
+		border: 1px solid var(--sl-color-gray-4);
+		border-radius: 999px;
+		background: color-mix(in srgb, var(--sl-color-white) 8%, transparent);
+		text-decoration: none;
+		font-size: 0.95rem;
+	}
+
+	.pdf-viewer__link:hover {
+		background: color-mix(in srgb, var(--sl-color-text-accent) 12%, var(--sl-color-bg));
+	}
+
+	.pdf-viewer__link:focus-visible {
+		outline: 3px solid var(--sl-color-text-accent);
+		outline-offset: 2px;
+	}
+
+	.pdf-viewer__help {
+		margin: 0;
+		padding: 0.85rem 1rem;
+		border-bottom: 1px solid var(--sl-color-gray-5);
+		background: color-mix(in srgb, var(--sl-color-bg) 85%, var(--sl-color-text-accent) 15%);
+		color: var(--sl-color-gray-2);
+		font-size: 0.95rem;
+	}
+
+	.pdf-viewer__frame {
+		display: block;
+		width: 100%;
+		border: 0;
+		background: var(--sl-color-white);
+	}
+
+	.pdf-viewer__frame:focus-visible {
+		outline: 3px solid var(--sl-color-text-accent);
+		outline-offset: -3px;
+	}
+
+	@media (max-width: 50rem) {
+		.pdf-viewer__header {
+			flex-direction: column;
+			align-items: flex-start;
+		}
+	}
+</style>
