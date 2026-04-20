@@ -3,9 +3,15 @@ title: OSPF
 description: Espacio de configuracion y evidencias para el protocolo OSPF en la topologia 1.
 ---
 
+import DynamicCiscoCommands from '../../../components/DynamicCiscoCommands.astro';
+
 ## Objetivo
 
 Documentar la configuracion de `OSPF` para los routers involucrados en la topologia 1.
+
+## Interfaces dinamicas
+
+Seleccione una sola base de interfaz y se ajustan automaticamente los comandos de R1, R2 y R3.
 
 ## Redes a anunciar
 
@@ -28,16 +34,22 @@ Documentar la configuracion de `OSPF` para los routers involucrados en la topolo
 
 ## Comandos
 
-### Router R1
-
-```bash
-enable
+<DynamicCiscoCommands
+	title="OSPF Topologia 1"
+	blocks={[
+		{
+			title: 'Router R1',
+			physicalInterfaces: [
+				{ id: 'INT_R1_R2', index: '0' },
+				{ id: 'INT_R1_R3', index: '1' },
+			],
+			template: `enable
 configure terminal
 hostname R1
-interface g0/0
+interface {{INT_R1_R2}}
 ip address 192.168.10.3 255.255.255.0
 no shutdown
-interface g0/1
+interface {{INT_R1_R3}}
 ip address 192.168.20.3 255.255.255.0
 no shutdown
 exit
@@ -46,19 +58,21 @@ network 192.168.10.0 0.0.0.255 area 0
 network 192.168.20.0 0.0.0.255 area 0
 exit
 exit
-copy running-config startup-config
-```
-
-### Router R2
-
-```bash
-enable
+copy running-config startup-config`,
+		},
+		{
+			title: 'Router R2',
+			physicalInterfaces: [
+				{ id: 'INT_R2_R1', index: '0' },
+				{ id: 'INT_R2_PC1', index: '1' },
+			],
+			template: `enable
 configure terminal
 hostname R2
-interface g0/0
+interface {{INT_R2_R1}}
 ip address 192.168.10.4 255.255.255.0
 no shutdown
-interface g0/1
+interface {{INT_R2_PC1}}
 ip address 192.168.30.1 255.255.255.0
 no shutdown
 interface loopback 2
@@ -71,19 +85,21 @@ network 192.168.30.0 0.0.0.255 area 0
 network 172.16.0.0 0.0.255.255 area 0
 exit
 exit
-copy running-config startup-config
-```
-
-### Router R3
-
-```bash
-enable
+copy running-config startup-config`,
+		},
+		{
+			title: 'Router R3',
+			physicalInterfaces: [
+				{ id: 'INT_R3_R1', index: '0' },
+				{ id: 'INT_R3_PC2', index: '1' },
+			],
+			template: `enable
 configure terminal
 hostname R3
-interface g0/0
+interface {{INT_R3_R1}}
 ip address 192.168.20.4 255.255.255.0
 no shutdown
-interface g0/1
+interface {{INT_R3_PC2}}
 ip address 192.168.40.1 255.255.255.0
 no shutdown
 interface loopback 3
@@ -96,8 +112,10 @@ network 192.168.40.0 0.0.0.255 area 0
 network 172.17.0.0 0.0.255.255 area 0
 exit
 exit
-copy running-config startup-config
-```
+copy running-config startup-config`,
+		},
+	]}
+/>
 
 ## Verificacion
 

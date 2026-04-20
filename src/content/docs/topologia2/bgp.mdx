@@ -1,0 +1,120 @@
+---
+title: BGP
+description: Espacio de configuracion y evidencias para el protocolo BGP en la topologia 2.
+---
+
+import InterfaceAliasBuilder from '../../../components/InterfaceAliasBuilder.astro';
+
+## Objetivo
+
+Documentar la configuracion de `BGP` entre los sistemas autonomos de la topologia 2.
+
+## Interfaces dinamicas
+
+Use el siguiente constructor para adaptar el nombre de la interfaz al router que le toque.
+
+<InterfaceAliasBuilder />
+
+## Sistemas autonomos
+
+- `R1`: `ASN 100`
+- `R2`: `ASN 200`
+- `R3`: `ASN 300`
+
+## Redes a anunciar
+
+### Router R1
+
+- `G0/0`: `192.168.10.1/24`
+- `G0/1`: `192.168.30.3/24`
+
+### Router R2
+
+- `G0/0`: `192.168.30.23/24`
+- `G0/1`: `192.168.40.23/24`
+- `G0/2`: `192.168.60.1/24`
+
+### Router R3
+
+- `G0/0`: `192.168.40.3/24`
+- `G0/1`: `192.168.50.1/24`
+
+## Comandos
+
+### Router R1
+
+```bash
+enable
+configure terminal
+hostname R1
+interface <INT_R1_PC0>
+ip address 192.168.10.1 255.255.255.0
+no shutdown
+exit
+interface <INT_R1_R2>
+ip address 192.168.30.3 255.255.255.0
+no shutdown
+exit
+router bgp 100
+neighbor 192.168.30.23 remote-as 200
+network 192.168.10.0 mask 255.255.255.0
+end
+copy running-config startup-config
+```
+
+### Router R2
+
+```bash
+enable
+configure terminal
+hostname R2
+interface <INT_R2_R1>
+ip address 192.168.30.23 255.255.255.0
+no shutdown
+exit
+interface <INT_R2_R3>
+ip address 192.168.40.23 255.255.255.0
+no shutdown
+exit
+interface <INT_R2_PC1>
+ip address 192.168.60.1 255.255.255.0
+no shutdown
+exit
+router bgp 200
+neighbor 192.168.30.3 remote-as 100
+neighbor 192.168.40.3 remote-as 300
+network 192.168.60.0 mask 255.255.255.0
+end
+copy running-config startup-config
+```
+
+### Router R3
+
+```bash
+enable
+configure terminal
+hostname R3
+interface <INT_R3_R2>
+ip address 192.168.40.3 255.255.255.0
+no shutdown
+exit
+interface <INT_R3_PC2>
+ip address 192.168.50.1 255.255.255.0
+no shutdown
+exit
+router bgp 300
+neighbor 192.168.40.23 remote-as 200
+network 192.168.50.0 mask 255.255.255.0
+end
+copy running-config startup-config
+```
+
+## Verificacion
+
+```txt
+# Pegue aqui comandos de verificacion, resumen BGP, tabla BGP o pruebas
+```
+
+## Evidencias y notas
+
+Agregue aqui observaciones sobre vecindades, anuncios y aprendizaje de rutas.

@@ -1,0 +1,111 @@
+---
+title: RIPng
+description: Espacio de configuracion y evidencias para el protocolo RIPng en la topologia 3.
+---
+
+import InterfaceAliasBuilder from '../../../components/InterfaceAliasBuilder.astro';
+
+## Objetivo
+
+Documentar la configuracion de `RIPng` para los routers involucrados en la topologia 3.
+
+## Interfaces dinamicas
+
+Use el siguiente constructor para adaptar el nombre de la interfaz al router que le toque.
+
+<InterfaceAliasBuilder />
+
+## Redes involucradas
+
+### Router R1
+
+- `G0/0`: `2001:ABCD:1435:A1::3/64`
+- `G0/1`: `2002:ABCD:1435:B1::3/64`
+
+### Router R2
+
+- `G0/0`: `2001:ABCD:1435:A1::4/64`
+- `G0/1`: `2002:ABCD:1435:C1::1/64`
+
+### Router R3
+
+- `G0/0`: `2002:ABCD:1435:B1::4/64`
+- `G0/1`: `2002:ABCD:1435:D1::1/64`
+
+## Comandos
+
+### Router R1
+
+```bash
+enable
+configure terminal
+hostname R1
+ipv6 unicast-routing
+ipv6 router rip REDES
+exit
+interface <INT_R1_R2>
+ipv6 address 2001:ABCD:1435:A1::3/64
+ipv6 rip REDES enable
+no shutdown
+exit
+interface <INT_R1_R3>
+ipv6 address 2002:ABCD:1435:B1::3/64
+ipv6 rip REDES enable
+no shutdown
+end
+copy running-config startup-config
+```
+
+### Router R2
+
+```bash
+enable
+configure terminal
+hostname R2
+ipv6 unicast-routing
+ipv6 router rip REDES
+exit
+interface <INT_R2_R1>
+ipv6 address 2001:ABCD:1435:A1::4/64
+ipv6 rip REDES enable
+no shutdown
+exit
+interface <INT_R2_PC1>
+ipv6 address 2002:ABCD:1435:C1::1/64
+ipv6 rip REDES enable
+no shutdown
+end
+copy running-config startup-config
+```
+
+### Router R3
+
+```bash
+enable
+configure terminal
+hostname R3
+ipv6 unicast-routing
+ipv6 router rip REDES
+exit
+interface <INT_R3_R1>
+ipv6 address 2002:ABCD:1435:B1::4/64
+ipv6 rip REDES enable
+no shutdown
+exit
+interface <INT_R3_PC2>
+ipv6 address 2002:ABCD:1435:D1::1/64
+ipv6 rip REDES enable
+no shutdown
+end
+copy running-config startup-config
+```
+
+## Verificacion
+
+```txt
+# Pegue aqui comandos de verificacion, tabla IPv6 o pruebas de conectividad
+```
+
+## Evidencias y notas
+
+Agregue aqui observaciones sobre propagacion de rutas IPv6 y resultados de validacion.
