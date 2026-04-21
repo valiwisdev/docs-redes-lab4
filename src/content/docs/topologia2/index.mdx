@@ -21,14 +21,14 @@ En esta topología:
 
 <ProgressChecklist
 	title="Lo que ya esta en Topologia 2"
-	description="Resumen del material ya cargado y lo que aun falta publicar."
+	description="Resumen del material ya cargado y lo que aún falta publicar."
 	items={[
-		{ label: 'Resumen general de la topologia', done: true },
-		{ label: 'Diagrama integrado en la pagina', done: true },
+		{ label: 'Resumen general de la topología', done: true },
+		{ label: 'Diagrama integrado en la página', done: true },
 		{ label: 'Tabla de direcciones IP', done: true },
-		{ label: 'Guia de comandos utiles', done: true },
-		{ label: 'Seccion del protocolo BGP', done: true },
-		{ label: 'Archivos de Packet Tracer', done: false },
+		{ label: 'Guía de comandos útiles', done: true },
+		{ label: 'Sección del protocolo BGP', done: true },
+		{ label: 'Archivos de Packet Tracer', done: true },
 		{ label: 'Capturas de Wireshark', done: false },
 	]}
 />
@@ -84,6 +84,7 @@ Estos comandos ayudan a revisar, corregir o limpiar la configuración durante la
 | Guardar configuración | `copy running-config startup-config` |
 | Ver tabla de rutas | `show ip route` |
 | Ver vecinos BGP | `show ip bgp summary` |
+| Ver tabla BGP | `show ip bgp` |
 | Reiniciar una interfaz | `interface g0/1`<br/>`shutdown`<br/>`no shutdown` |
 | Restaurar una interfaz a valores por defecto | `default interface g0/1` |
 | Quitar proceso BGP en `ASN 100` | `no router bgp 100` |
@@ -102,9 +103,14 @@ Estos comandos ayudan a revisar, corregir o limpiar la configuración durante la
 
 <PacketTracerDownloads
 	title="Descargas de la Topología 2"
-	description="Aquí podrá descargar los archivos .pkt de la topología 2 cuando estén disponibles."
-	items={[]}
-	emptyMessage="Aún no se han cargado archivos de Packet Tracer para esta topología."
+	description="Aquí podrá descargar el archivo de Packet Tracer correspondiente a la topología 2."
+	items={[
+		{
+			title: 'TP2 - BGP',
+			href: '/cisco/TP2 - BGP.pkt',
+			description: 'Topología 2 con la configuración base de BGP entre los AS 100, 200 y 300.',
+		},
+	]}
 />
 
 ## Archivos de Wireshark

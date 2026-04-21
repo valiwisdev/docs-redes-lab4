@@ -48,7 +48,24 @@ Seleccione una sola base de interfaz y se ajustan automáticamente los comandos 
 				{ id: 'INT_R1_PC0', index: '0' },
 				{ id: 'INT_R1_R2', index: '1' },
 			],
-			template: ``,
+			template: `enable
+configure terminal
+hostname R1
+interface {{INT_R1_PC0}}
+ip address 192.168.10.1 255.255.255.0
+no shutdown
+exit
+interface {{INT_R1_R2}}
+ip address 192.168.30.3 255.255.255.0
+no shutdown
+exit
+router bgp 100
+neighbor 192.168.30.23 remote-as 200
+network 192.168.10.0 mask 255.255.255.0
+network 192.168.30.0 mask 255.255.255.0
+exit
+end
+copy running-config startup-config`,
 		},
 		{
 			title: 'Router R2',
@@ -57,7 +74,30 @@ Seleccione una sola base de interfaz y se ajustan automáticamente los comandos 
 				{ id: 'INT_R2_R3', index: '1' },
 				{ id: 'INT_R2_PC1', index: '2' },
 			],
-			template: ``,
+			template: `enable
+configure terminal
+hostname R2
+interface {{INT_R2_R1}}
+ip address 192.168.30.23 255.255.255.0
+no shutdown
+exit
+interface {{INT_R2_R3}}
+ip address 192.168.40.23 255.255.255.0
+no shutdown
+exit
+interface {{INT_R2_PC1}}
+ip address 192.168.60.1 255.255.255.0
+no shutdown
+exit
+router bgp 200
+neighbor 192.168.30.3 remote-as 100
+neighbor 192.168.40.3 remote-as 300
+network 192.168.30.0 mask 255.255.255.0
+network 192.168.40.0 mask 255.255.255.0
+network 192.168.60.0 mask 255.255.255.0
+exit
+end
+copy running-config startup-config`,
 		},
 		{
 			title: 'Router R3',
@@ -65,7 +105,24 @@ Seleccione una sola base de interfaz y se ajustan automáticamente los comandos 
 				{ id: 'INT_R3_R2', index: '0' },
 				{ id: 'INT_R3_PC2', index: '1' },
 			],
-			template: ``,
+			template: `enable
+configure terminal
+hostname R3
+interface {{INT_R3_R2}}
+ip address 192.168.40.3 255.255.255.0
+no shutdown
+exit
+interface {{INT_R3_PC2}}
+ip address 192.168.50.1 255.255.255.0
+no shutdown
+exit
+router bgp 300
+neighbor 192.168.40.23 remote-as 200
+network 192.168.40.0 mask 255.255.255.0
+network 192.168.50.0 mask 255.255.255.0
+exit
+end
+copy running-config startup-config`,
 		},
 	]}
 />
@@ -73,5 +130,31 @@ Seleccione una sola base de interfaz y se ajustan automáticamente los comandos 
 ## Verificación
 
 ```txt
-# Pegue aquí comandos de verificación, resumen BGP, tabla BGP o pruebas
+show ip bgp summary
+show ip route
+show ip bgp
+
+PC1 (192.168.10.5)
+
+PC1> ping 192.168.10.1 - probar conexión con R1
+PC1> ping 192.168.60.1 - probar conexión con R2
+PC1> ping 192.168.50.1 - probar conexión con R3
+PC1> ping 192.168.60.5 - probar conexión con PC2
+PC1> ping 192.168.50.5 - probar conexión con PC3
+
+PC2 (192.168.60.5)
+
+PC2> ping 192.168.10.1 - probar conexión con R1
+PC2> ping 192.168.60.1 - probar conexión con R2
+PC2> ping 192.168.50.1 - probar conexión con R3
+PC2> ping 192.168.10.5 - probar conexión con PC1
+PC2> ping 192.168.50.5 - probar conexión con PC3
+
+PC3 (192.168.50.5)
+
+PC3> ping 192.168.10.1 - probar conexión con R1
+PC3> ping 192.168.60.1 - probar conexión con R2
+PC3> ping 192.168.50.1 - probar conexión con R3
+PC3> ping 192.168.10.5 - probar conexión con PC1
+PC3> ping 192.168.60.5 - probar conexión con PC2
 ```

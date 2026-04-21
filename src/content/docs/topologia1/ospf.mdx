@@ -120,13 +120,13 @@ copy running-config startup-config`,
 ## Verificación
 
 ```txt
-PC1> ping 192.168.10.3
-PC1> ping 192.168.30.1
-PC1> ping 192.168.40.1
-PC1> ping 192.168.40.32
+PC1> ping 192.168.10.3   - Verifica la conectividad entre PC1 y la interfaz de R1
+PC1> ping 192.168.30.1   - Confirma que PC1 alcanza la red conectada a R2
+PC1> ping 192.168.40.1   - Comprueba que PC1 puede llegar hasta la interfaz LAN de R3 por medio de OSPF
+PC1> ping 192.168.40.32  - Valida el acceso a un host remoto dentro de la red de PC2
 
-PC2> ping 192.168.20.3
-PC2> ping 192.168.30.1
-PC2> ping 192.168.40.1
-PC2> ping 192.168.30.32
+PC2> ping 192.168.20.3   - Verifica la conectividad entre PC2 y la interfaz de R1
+PC2> ping 192.168.30.1   - Confirma que PC2 alcanza la red conectada a R2
+PC2> ping 192.168.40.1   - Comprueba la conectividad local hacia su router de acceso R3
+PC2> ping 192.168.30.32  - Valida el acceso a un host remoto dentro de la red de PC1
 ```
