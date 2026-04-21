@@ -1,0 +1,74 @@
+---
+title: Inicio
+description: Portal principal del Laboratorio 4 de Redes con acceso rapido a topologias, protocolos y material de apoyo.
+template: splash
+hero:
+  title: Laboratorio 4 de Redes
+  tagline: Un portal unico para consultar topologias, practicar protocolos de enrutamiento y descargar el material necesario del laboratorio.
+  actions:
+    - text: Ver material de apoyo
+      link: /material-apoyo/
+      variant: primary
+    - text: Ir a Topologia 1
+      link: /topologia1/
+      variant: secondary
+editUrl: false
+prev: false
+next: false
+tableOfContents: false
+---
+
+import { Card, CardGrid } from '@astrojs/starlight/components';
+
+## Recorrido rapido
+
+Este sitio reune los recursos de trabajo del laboratorio en una sola interfaz. Puede entrar por la topologia que este configurando, abrir las guias en PDF desde el navegador y descargar archivos de apoyo sin salir de la documentacion.
+
+<CardGrid stagger>
+	<Card title="Topologia 1" icon="seti:router">
+		Practica de `RIPv1` y `OSPF` con resumen, direccionamiento, comandos utiles, archivos de Packet Tracer y capturas de Wireshark.
+
+		[Entrar a la topologia 1](/topologia1/)
+	</Card>
+	<Card title="Topologia 2" icon="seti:router">
+		Escenario de `BGP` con sistemas autonomos, tabla de IPs, guia operativa y archivo base para Packet Tracer.
+
+		[Entrar a la topologia 2](/topologia2/)
+	</Card>
+	<Card title="Topologia 3" icon="seti:router">
+		Laboratorio en `IPv6` con practicas de `RIPng` y `OSPFv3`, resumen de redes y descargas para simulacion.
+
+		[Entrar a la topologia 3](/topologia3/)
+	</Card>
+</CardGrid>
+
+## Que encontrara aqui
+
+<CardGrid>
+	<Card title="Guias y entregables" icon="seti:pdf">
+		Los PDF del laboratorio estan integrados en el sitio para consulta rapida desde la seccion de material de apoyo.
+	</Card>
+	<Card title="Configuraciones base" icon="seti:terminal">
+		Cada protocolo incluye comandos Cisco listos para revisar, adaptar y usar durante la practica.
+	</Card>
+	<Card title="Archivos descargables" icon="seti:download">
+		El repositorio publica archivos `.pkt` y, donde ya existen, capturas `.pcap` para analisis en Wireshark.
+	</Card>
+</CardGrid>
+
+## Mapa del laboratorio
+
+| Seccion | Protocolos | Recursos disponibles |
+| --- | --- | --- |
+| [Topologia 1](/topologia1/) | `RIPv1`, `OSPF` | Resumen, diagrama, tabla de IPs, `.pkt`, `.pcap` |
+| [Topologia 2](/topologia2/) | `BGP` | Resumen, diagrama, tabla de IPs, `.pkt` |
+| [Topologia 3](/topologia3/) | `RIPng`, `OSPFv3` | Resumen, diagrama, tabla IPv6, `.pkt` |
+| [Material de apoyo](/material-apoyo/) | PDFs | Guias, instrucciones y entregables |
+
+## Ruta sugerida
+
+1. Revise primero el [material de apoyo](/material-apoyo/).
+2. Abra la topologia que corresponda a su practica.
+3. Use el resumen para validar direccionamiento e interfaces.
+4. Entre al protocolo especifico para copiar o adaptar la configuracion.
+5. Descargue el archivo de Packet Tracer y, si existe, las capturas de Wireshark.

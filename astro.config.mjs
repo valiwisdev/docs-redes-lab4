@@ -4,9 +4,6 @@ import starlight from '@astrojs/starlight';
 
 // https://astro.build/config
 export default defineConfig({
-	redirects: {
-		'/': '/topologia1/',
-	},
 	integrations: [
 		starlight({
 			title: 'Laboratorio 4 - Redes',
@@ -14,6 +11,7 @@ export default defineConfig({
 				{
 					label: 'Laboratorio',
 					items: [
+						{ label: 'Inicio', link: '/' },
 						{ label: 'Material de apoyo', link: '/material-apoyo/' },
 						{
 							label: 'Topologia 1',
