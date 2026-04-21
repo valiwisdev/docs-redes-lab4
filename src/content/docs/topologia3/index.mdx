@@ -30,7 +30,7 @@ En esta topología:
 		{ label: 'Guia de comandos utiles', done: true },
 		{ label: 'Seccion del protocolo RIPng', done: true },
 		{ label: 'Seccion del protocolo OSPFv3', done: true },
-		{ label: 'Archivos de Packet Tracer', done: false },
+		{ label: 'Archivos de Packet Tracer', done: true },
 		{ label: 'Capturas de Wireshark', done: false },
 	]}
 />
@@ -102,9 +102,19 @@ Estos atajos son útiles para verificar conectividad `IPv6`, limpiar configuraci
 
 <PacketTracerDownloads
 	title="Descargas de la Topología 3"
-	description="Aquí podrá descargar los archivos .pkt de la topología 3 cuando estén disponibles."
-	items={[]}
-	emptyMessage="Aún no se han cargado archivos de Packet Tracer para esta topología."
+	description="Aquí podrá descargar los archivos de Packet Tracer correspondientes a la topología 3."
+	items={[
+		{
+			title: 'TP3 - RIPng',
+			href: '/cisco/TP3 - RIPng.pkt',
+			description: 'Topología 3 con la configuración base de RIPng para la práctica con IPv6.',
+		},
+		{
+			title: 'TP3 - OSPFv3',
+			href: '/cisco/TP3 - OSPFv3.pkt',
+			description: 'Topología 3 con la configuración base de OSPFv3 para la práctica con IPv6.',
+		},
+	]}
 />
 
 ## Archivos de Wireshark

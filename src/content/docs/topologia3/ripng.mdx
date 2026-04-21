@@ -41,7 +41,23 @@ Seleccione una sola base de interfaz y se ajustan automáticamente los comandos 
 				{ id: 'INT_R1_R2', index: '0' },
 				{ id: 'INT_R1_R3', index: '1' },
 			],
-			template: ``,
+			template: `enable
+configure terminal
+hostname R1
+ipv6 unicast-routing
+interface {{INT_R1_R2}}
+ipv6 address 2001:ABCD:1435:A1::3/64
+ipv6 rip infracom enable
+no shutdown
+exit
+interface {{INT_R1_R3}}
+ipv6 address 2002:ABCD:1435:B1::3/64
+ipv6 rip infracom enable
+no shutdown
+exit
+ipv6 router rip infracom
+end
+copy running-config startup-config`,
 		},
 		{
 			title: 'Router R2',
@@ -49,7 +65,23 @@ Seleccione una sola base de interfaz y se ajustan automáticamente los comandos 
 				{ id: 'INT_R2_R1', index: '0' },
 				{ id: 'INT_R2_PC1', index: '1' },
 			],
-			template: ``,
+			template: `enable
+configure terminal
+hostname R2
+ipv6 unicast-routing
+interface {{INT_R2_R1}}
+ipv6 address 2001:ABCD:1435:A1::4/64
+ipv6 rip infracom enable
+no shutdown
+exit
+interface {{INT_R2_PC1}}
+ipv6 address 2002:ABCD:1435:C1::1/64
+ipv6 rip infracom enable
+no shutdown
+exit
+ipv6 router rip infracom
+end
+copy running-config startup-config`,
 		},
 		{
 			title: 'Router R3',
@@ -57,7 +89,23 @@ Seleccione una sola base de interfaz y se ajustan automáticamente los comandos 
 				{ id: 'INT_R3_R1', index: '0' },
 				{ id: 'INT_R3_PC2', index: '1' },
 			],
-			template: ``,
+			template: `enable
+configure terminal
+hostname R3
+ipv6 unicast-routing
+interface {{INT_R3_R1}}
+ipv6 address 2002:ABCD:1435:B1::4/64
+ipv6 rip infracom enable
+no shutdown
+exit
+interface {{INT_R3_PC2}}
+ipv6 address 2002:ABCD:1435:D1::1/64
+ipv6 rip infracom enable
+no shutdown
+exit
+ipv6 router rip infracom
+end
+copy running-config startup-config`,
 		},
 	]}
 />
@@ -65,5 +113,30 @@ Seleccione una sola base de interfaz y se ajustan automáticamente los comandos 
 ## Verificación
 
 ```txt
-# Pegue aquí comandos de verificación, tabla IPv6 o pruebas de conectividad
+show ipv6 route
+show ipv6 protocols
+
+Desde PC-1
+PC-1> ping 2002:ABCD:1435:C1::1 - probar conexión con R2
+PC-1> ping 2001:ABCD:1435:A1::3 - probar conexión con R1
+PC-1> ping 2002:ABCD:1435:B1::4 - probar conexión con R3
+PC-1> ping 2002:ABCD:1435:D1::1 - probar interfaz LAN de R3
+PC-1> ping 2002:ABCD:1435:D1::32 - probar conexión con PC-2
+
+Desde PC-2
+PC-2> ping 2002:ABCD:1435:D1::1 - probar conexión con R3
+PC-2> ping 2002:ABCD:1435:B1::3 - probar conexión con R1
+PC-2> ping 2001:ABCD:1435:A1::4 - probar conexión con R2
+PC-2> ping 2002:ABCD:1435:C1::1 - probar interfaz LAN de R2
+PC-2> ping 2002:ABCD:1435:C1::32 - probar conexión con PC-1
+```
+
+## Comandos de ayuda
+
+```txt
+show ipv6 interface brief
+show ipv6 protocols
+show ipv6 rip infracom
+show ipv6 route
+show running-config
 ```
