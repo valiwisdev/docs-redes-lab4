@@ -8,6 +8,7 @@ sidebar:
 import DrawIoDiagram from '../../../components/DrawIoDiagram.astro';
 import PacketTracerDownloads from '../../../components/PacketTracerDownloads.astro';
 import ProgressChecklist from '../../../components/ProgressChecklist.astro';
+import { Tabs, TabItem } from '@astrojs/starlight/components';
 
 ## Descripción
 
@@ -119,10 +120,34 @@ Estos atajos son útiles para verificar conectividad `IPv6`, limpiar configuraci
 
 ## Archivos de Wireshark
 
-<PacketTracerDownloads
-	title="Capturas de Wireshark - Topología 3"
-	description="En esta sección se publicarán las capturas o trazas de Wireshark asociadas a las pruebas IPv6."
-	items={[]}
-	emptyMessage="Aún no se han cargado archivos de Wireshark para esta topología."
-	downloadLabel="Descargar captura"
-/>
+<Tabs>
+	<TabItem label="RIPng">
+		<PacketTracerDownloads
+			title="Capturas de Wireshark - RIPng"
+			description="Capturas asociadas a las pruebas de RIPng en la topología 3."
+			items={[
+				{
+					title: 'Captura PC1 a PC2',
+					href: '/wireshark/TP3/RIPng/PC1-PC2.pcap',
+					description: 'Captura de tráfico IPv6 entre los hosts finales durante la práctica de RIPng.',
+				},
+				{
+					title: 'Captura PC2 a PC1',
+					href: '/wireshark/TP3/RIPng/PC2-PC1.pcapng',
+					description: 'Captura de retorno entre los hosts para validar convergencia y conectividad con RIPng.',
+				},
+			]}
+			downloadLabel="Descargar captura"
+		/>
+	</TabItem>
+
+	<TabItem label="OSPFv3">
+		<PacketTracerDownloads
+			title="Capturas de Wireshark - OSPFv3"
+			description="Capturas asociadas a las pruebas de OSPFv3 en la topología 3."
+			items={[]}
+			emptyMessage="Aún no se han cargado capturas de Wireshark para OSPFv3 en esta topología."
+			downloadLabel="Descargar captura"
+		/>
+	</TabItem>
+</Tabs>
