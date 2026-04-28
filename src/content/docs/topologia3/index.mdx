@@ -145,8 +145,18 @@ Estos atajos son útiles para verificar conectividad `IPv6`, limpiar configuraci
 		<PacketTracerDownloads
 			title="Capturas de Wireshark - OSPFv3"
 			description="Capturas asociadas a las pruebas de OSPFv3 en la topología 3."
-			items={[]}
-			emptyMessage="Aún no se han cargado capturas de Wireshark para OSPFv3 en esta topología."
+			items={[
+				{
+					title: 'Captura PC1 a PC2',
+					href: '/wireshark/TP3/OSPFV3/PC1-PC2OSPFV3.pcap',
+					description: 'Captura de tráfico IPv6 entre los hosts finales durante la práctica de OSPFv3.',
+				},
+				{
+					title: 'Captura PC2 a PC1',
+					href: '/wireshark/TP3/OSPFV3/PC2-PC1OSPFv3.pcap',
+					description: 'Captura de retorno entre los hosts para validar convergencia y conectividad con OSPFv3.',
+				},
+			]}
 			downloadLabel="Descargar captura"
 		/>
 	</TabItem>
