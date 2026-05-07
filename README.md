@@ -9,7 +9,7 @@ Sitio de documentacion construido con `Astro` + `Starlight` para centralizar el 
 - Topologia 3 con practicas de `RIPng` y `OSPFv3`
 - Visor embebido para los PDF del laboratorio
 - Descargas de archivos `Packet Tracer`
-- Capturas `Wireshark` publicadas para la Topologia 1
+- Capturas `Wireshark` publicadas para las Topologias 1, 2 y 3
 - Componentes reutilizables para diagramas, checklists, visor PDF y bloques de descargas
 
 ## Stack
@@ -64,7 +64,7 @@ Incluye resumen general, sistemas autonomos, tabla de direccionamiento, comandos
 
 - `BGP`
 
-Actualmente no hay capturas de Wireshark publicadas para esta topologia.
+Incluye capturas `.pcap` para análisis en Wireshark.
 
 ### Topologia 3
 
@@ -73,7 +73,7 @@ Incluye resumen general, direccionamiento `IPv6`, comandos utiles y archivos `.p
 - `RIPng`
 - `OSPFv3`
 
-Actualmente no hay capturas de Wireshark publicadas para esta topologia.
+Incluye capturas `.pcap` para análisis en Wireshark.
 
 ## Desarrollo local
 

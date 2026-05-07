@@ -29,7 +29,7 @@ En esta topología:
 		{ label: 'Guía de comandos útiles', done: true },
 		{ label: 'Sección del protocolo BGP', done: true },
 		{ label: 'Archivos de Packet Tracer', done: true },
-		{ label: 'Capturas de Wireshark', done: false },
+		{ label: 'Capturas de Wireshark', done: true },
 	]}
 />
 
@@ -118,7 +118,22 @@ Estos comandos ayudan a revisar, corregir o limpiar la configuración durante la
 <PacketTracerDownloads
 	title="Capturas de Wireshark - Topología 2"
 	description="En esta sección se publicarán las capturas o trazas de Wireshark asociadas a las pruebas de BGP."
-	items={[]}
-	emptyMessage="Aún no se han cargado archivos de Wireshark para esta topología."
+	items={[
+		{
+			title: 'Captura PC1 - BGP',
+			href: '/wireshark/TP2/BGP/PC1-TODOS-BGP.pcap',
+			description: 'Captura de tráfico tomada desde PC1 durante las pruebas de BGP.',
+		},
+		{
+			title: 'Captura PC2 - BGP',
+			href: '/wireshark/TP2/BGP/PC2-TODOS-BGP.pcap',
+			description: 'Captura de tráfico tomada desde PC2 durante las pruebas de BGP.',
+		},
+		{
+			title: 'Captura PC3 - BGP',
+			href: '/wireshark/TP2/BGP/PC3-TODOS_BGP.pcap',
+			description: 'Captura de tráfico tomada desde PC3 durante las pruebas de BGP.',
+		},
+	]}
 	downloadLabel="Descargar captura"
 />

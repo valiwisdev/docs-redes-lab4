@@ -4,6 +4,7 @@ description: Espacio de configuración y evidencias para el protocolo RIPng en l
 ---
 
 import DynamicCiscoCommands from '../../../components/DynamicCiscoCommands.astro';
+import PacketTracerDownloads from '../../../components/PacketTracerDownloads.astro';
 
 ## Objetivo
 
@@ -52,16 +53,36 @@ no shutdown
 exit
 interface {{INT_R1_R3}}
 ipv6 address 2002:ABCD:1435:B1::3/64
-ipv6 rip infracom enable
-no shutdown
-exit
-ipv6 router rip infracom
-end
-copy running-config startup-config`,
+
+## Archivos de Wireshark
+
+<PacketTracerDownloads
+	title="Capturas de Wireshark - RIPng"
+	description="Capturas asociadas a las pruebas de RIPng en la topología 3."
+	items={[
+		{
+			title: 'Captura PC1 a PC2',
+			href: '/wireshark/TP3/RIPng/PC1-PC2RIPNG.pcap',
+			description: 'Captura de tráfico entre los hosts finales durante la práctica de RIPng.',
 		},
 		{
-			title: 'Router R2',
-			physicalInterfaces: [
+			title: 'Captura PC2 a PC1',
+			href: '/wireshark/TP3/RIPng/PC2-PC1RIPNG.pcap',
+			description: 'Captura de tráfico entre los hosts finales durante la práctica de RIPng (dirección inversa).',
+		},
+	]}
+	downloadLabel="Descargar captura"
+/>
+
+## Comandos de ayuda
+
+```txt
+show ipv6 interface brief
+show ipv6 protocols
+show ipv6 rip infracom
+show ipv6 route
+show running-config
+```
 				{ id: 'INT_R2_R1', index: '0' },
 				{ id: 'INT_R2_PC1', index: '1' },
 			],
