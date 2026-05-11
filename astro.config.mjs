@@ -6,10 +6,10 @@ import starlight from '@astrojs/starlight';
 export default defineConfig({
 	integrations: [
 		starlight({
-			title: 'Laboratorio 4 - Redes',
+			title: 'Laboratorios de Redes',
 			sidebar: [
 				{
-					label: 'Laboratorio',
+					label: 'Laboratorio 4',
 					items: [
 						{ label: 'Inicio', link: '/' },
 						{ label: 'Material de apoyo', link: '/material-apoyo/' },
@@ -49,7 +49,14 @@ export default defineConfig({
 								},
 							],
 						},
-					]
+					],
+				},
+				{
+					label: 'Laboratorio 5',
+					items: [
+						{ label: 'Inicio', link: '/lab5/' },
+						{ label: 'Material de apoyo', link: '/lab5/material-apoyo/' },
+					],
 				},
 			],
 		}),
