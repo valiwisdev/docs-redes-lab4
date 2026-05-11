@@ -1,0 +1,371 @@
+---
+title: Resumen
+description: Resumen del Laboratorio 5 con direccionamiento, asignacion de puertos, diagramas y comandos.
+sidebar:
+  label: Resumen
+---
+
+import DrawIoDiagram from '../../../components/DrawIoDiagram.astro';
+import PacketTracerDownloads from '../../../components/PacketTracerDownloads.astro';
+
+## Resumen del Laboratorio 5
+
+Esta pagina reune la informacion principal del Laboratorio 5 para el **grupo 3, seccion 2**. En el PDF, los valores `X` y `Y` deben reemplazarse por el numero de grupo y la seccion asignada, por lo que en este caso `XY = 32`.
+
+## Tabla de direccionamiento
+
+| Dispositivo | Interfaz | Direccion IP | Mascara de subred | Gateway predeterminado |
+| --- | --- | --- | --- | --- |
+| R1 | G0/0.1 | 192.168.1.1 | 255.255.255.0 | N/A |
+| R1 | G0/0.5 | 192.168.5.1 | 255.255.255.0 | N/A |
+| R1 | G0/0.10 | 192.168.10.1 | 255.255.255.0 | N/A |
+| R1 | G0/0.15 | 192.168.15.1 | 255.255.255.0 | N/A |
+| S1 | VLAN 1 | 192.168.1.5 | 255.255.255.0 | 192.168.1.1 |
+| S2 | VLAN 1 | 192.168.1.10 | 255.255.255.0 | 192.168.1.1 |
+| S3 | VLAN 1 | 192.168.1.15 | 255.255.255.0 | 192.168.1.1 |
+| PC-A | NIC | 192.168.5.32 | 255.255.255.0 | 192.168.5.1 |
+| PC-B | NIC | 192.168.10.32 | 255.255.255.0 | 192.168.10.1 |
+| PC-C | NIC | 192.168.15.32 | 255.255.255.0 | 192.168.15.1 |
+
+## Especificaciones de la asignacion de puertos de switch
+
+| Switch | Puerto | Asignacion | Red |
+| --- | --- | --- | --- |
+| S1 | F0/1 | Enlace troncal 802.1Q | N/A |
+| S1 | F0/2 | Enlace troncal 802.1Q | N/A |
+| S1 | F0/5 | VLAN 5: Estudiantes32 | 192.168.5.0/24 |
+| S2 | F0/1 | Enlace troncal 802.1Q | N/A |
+| S2 | F0/2 | Enlace troncal 802.1Q | N/A |
+| S2 | F0/10 | VLAN 10: Docentes32 | 192.168.10.0/24 |
+| S3 | F0/1 | Enlace troncal 802.1Q | N/A |
+| S3 | F0/15 | VLAN 15: Administrativos32 | 192.168.15.0/24 |
+
+## Diagramas
+
+### Topologia general
+
+<DrawIoDiagram
+	url="https://drive.google.com/uc?id=1IF_mVsADYf5AoXLwbWye55jKp95XswPe&export=download"
+	openUrl="https://drive.google.com/file/d/1IF_mVsADYf5AoXLwbWye55jKp95XswPe/view?usp=sharing"
+	title="Laboratorio 5 - VLANs Grupo 3 Seccion 2"
+	height="720px"
+	toolbar="zoom layers tags lightbox"
+/>
+
+### VLANs del grupo 3, seccion 2
+
+| VLAN | Nombre | Red | Host principal |
+| --- | --- | --- | --- |
+| 1 | Administracion | 192.168.1.0/24 | S1, S2, S3 |
+| 5 | Estudiantes32 | 192.168.5.0/24 | PC-A |
+| 10 | Docentes32 | 192.168.10.0/24 | PC-B |
+| 15 | Administrativos32 | 192.168.15.0/24 | PC-C |
+
+## Archivos de Packet Tracer
+
+<PacketTracerDownloads
+	title="Descargas de Cisco Packet Tracer - Laboratorio 5"
+	description="Archivo de Packet Tracer para trabajar la practica de VLANs del grupo 3, seccion 2."
+	items={[
+		{
+			title: 'Laboratorio 5 - VLANs',
+			href: '/cisco/VLANS.pkt',
+			description: 'Topologia para configurar VLANs, enlaces troncales y router-on-a-stick.',
+		},
+	]}
+/>
+
+## Archivos de Wireshark
+
+<PacketTracerDownloads
+	title="Capturas de Wireshark - Laboratorio 5"
+	description="Espacio reservado para publicar capturas de trafico del laboratorio cuando esten disponibles."
+	items={[]}
+	emptyMessage="No hay capturas de Wireshark disponibles en este momento."
+	downloadLabel="Descargar captura"
+/>
+
+## Comandos del Laboratorio 5
+
+Los siguientes comandos corresponden al grupo 3, seccion 2. Si el equipo usa `GigabitEthernet` en vez de `FastEthernet`, cambie `f0/x` por la interfaz real del dispositivo. Puede verificarlo con `show interfaces` o `show ip interface brief`.
+
+### Configuracion de PCs
+
+#### PC-A
+
+```text
+IP Address: 192.168.5.32
+Subnet Mask: 255.255.255.0
+Default Gateway: 192.168.5.1
+```
+
+#### PC-B
+
+```text
+IP Address: 192.168.10.32
+Subnet Mask: 255.255.255.0
+Default Gateway: 192.168.10.1
+```
+
+#### PC-C
+
+```text
+IP Address: 192.168.15.32
+Subnet Mask: 255.255.255.0
+Default Gateway: 192.168.15.1
+```
+
+### R1
+
+```bash
+enable
+configure terminal
+hostname R1
+
+line console 0
+logging synchronous
+exit
+
+interface g0/0
+no shutdown
+exit
+
+interface g0/0.1
+encapsulation dot1Q 1
+ip address 192.168.1.1 255.255.255.0
+exit
+
+interface g0/0.5
+encapsulation dot1Q 5
+ip address 192.168.5.1 255.255.255.0
+exit
+
+interface g0/0.10
+encapsulation dot1Q 10
+ip address 192.168.10.1 255.255.255.0
+exit
+
+interface g0/0.15
+encapsulation dot1Q 15
+ip address 192.168.15.1 255.255.255.0
+exit
+
+end
+copy running-config startup-config
+```
+
+#### Verificacion en R1
+
+```bash
+show ip interface brief
+show ip route
+show running-config
+```
+
+### S1
+
+```bash
+enable
+configure terminal
+hostname S1
+
+line console 0
+logging synchronous
+exit
+
+interface vlan 1
+ip address 192.168.1.5 255.255.255.0
+no shutdown
+exit
+
+ip default-gateway 192.168.1.1
+
+vlan 5
+name Estudiantes32
+exit
+
+vlan 10
+name Docentes32
+exit
+
+vlan 15
+name Administrativos32
+exit
+
+interface f0/1
+switchport mode trunk
+no shutdown
+exit
+
+interface f0/2
+switchport mode trunk
+no shutdown
+exit
+
+interface f0/5
+switchport mode access
+switchport access vlan 5
+no shutdown
+exit
+
+end
+copy running-config startup-config
+```
+
+#### Verificacion en S1
+
+```bash
+show vlan brief
+show interfaces trunk
+show running-config
+```
+
+### S2
+
+```bash
+enable
+configure terminal
+hostname S2
+
+line console 0
+logging synchronous
+exit
+
+interface vlan 1
+ip address 192.168.1.10 255.255.255.0
+no shutdown
+exit
+
+ip default-gateway 192.168.1.1
+
+vlan 5
+name Estudiantes32
+exit
+
+vlan 10
+name Docentes32
+exit
+
+vlan 15
+name Administrativos32
+exit
+
+interface f0/1
+switchport mode trunk
+no shutdown
+exit
+
+interface f0/2
+switchport mode trunk
+no shutdown
+exit
+
+interface f0/10
+switchport mode access
+switchport access vlan 10
+no shutdown
+exit
+
+end
+copy running-config startup-config
+```
+
+#### Verificacion en S2
+
+```bash
+show vlan brief
+show interfaces trunk
+show running-config
+```
+
+### S3
+
+```bash
+enable
+configure terminal
+hostname S3
+
+line console 0
+logging synchronous
+exit
+
+interface vlan 1
+ip address 192.168.1.15 255.255.255.0
+no shutdown
+exit
+
+ip default-gateway 192.168.1.1
+
+vlan 5
+name Estudiantes32
+exit
+
+vlan 10
+name Docentes32
+exit
+
+vlan 15
+name Administrativos32
+exit
+
+interface f0/1
+switchport mode trunk
+no shutdown
+exit
+
+interface f0/15
+switchport mode access
+switchport access vlan 15
+no shutdown
+exit
+
+end
+copy running-config startup-config
+```
+
+#### Verificacion en S3
+
+```bash
+show vlan brief
+show interfaces trunk
+show running-config
+```
+
+### Pruebas de conectividad
+
+Desde PC-A:
+
+```bash
+ping 192.168.5.1
+ping 192.168.10.32
+ping 192.168.15.32
+ping 192.168.1.1
+```
+
+Desde PC-B:
+
+```bash
+ping 192.168.10.1
+ping 192.168.5.32
+ping 192.168.15.32
+ping 192.168.1.1
+```
+
+Desde PC-C:
+
+```bash
+ping 192.168.15.1
+ping 192.168.5.32
+ping 192.168.10.32
+ping 192.168.1.1
+```
+
+### Exportar configuracion para entrega
+
+En cada switch y en el router ejecute:
+
+```bash
+show running-config
+```
+
+Copie el resultado en un archivo de texto y tome captura de pantalla, segun lo solicita el laboratorio.

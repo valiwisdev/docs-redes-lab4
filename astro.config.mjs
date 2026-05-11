@@ -55,6 +55,7 @@ export default defineConfig({
 					label: 'Laboratorio 5',
 					items: [
 						{ label: 'Inicio', link: '/lab5/' },
+						{ label: 'Resumen', link: '/lab5/resumen/' },
 						{ label: 'Material de apoyo', link: '/lab5/material-apoyo/' },
 					],
 				},
