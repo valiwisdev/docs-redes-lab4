@@ -1,6 +1,6 @@
 ---
 title: Resumen
-description: Resumen del Laboratorio 5 con direccionamiento, asignacion de puertos, diagramas y comandos.
+description: Resumen del Laboratorio 5 con direccionamiento, asignación de puertos, diagramas y comandos.
 sidebar:
   label: Resumen
 ---
@@ -8,14 +8,15 @@ sidebar:
 import DrawIoDiagram from '../../../components/DrawIoDiagram.astro';
 import PacketTracerDownloads from '../../../components/PacketTracerDownloads.astro';
 import DynamicCiscoCommands from '../../../components/DynamicCiscoCommands.astro';
+import ProgressChecklist from '../../../components/ProgressChecklist.astro';
 
 ## Resumen del Laboratorio 5
 
-Esta pagina reune la informacion principal del Laboratorio 5 para el **grupo 3, seccion 2**. En el PDF, los valores `X` y `Y` deben reemplazarse por el numero de grupo y la seccion asignada, por lo que en este caso `XY = 32`.
+Esta página reúne la información principal del Laboratorio 5 para el **grupo 3, sección 2**. En el PDF, los valores `X` y `Y` deben reemplazarse por el número de grupo y la sección asignada, por lo que en este caso `XY = 32`.
 
 ## Tabla de direccionamiento
 
-| Dispositivo | Interfaz | Direccion IP | Mascara de subred | Gateway predeterminado |
+| Dispositivo | Interfaz | Dirección IP | Máscara de subred | Gateway predeterminado |
 | --- | --- | --- | --- | --- |
 | R1 | G0/0.1 | 192.168.1.1 | 255.255.255.0 | N/A |
 | R1 | G0/0.5 | 192.168.5.1 | 255.255.255.0 | N/A |
@@ -28,9 +29,9 @@ Esta pagina reune la informacion principal del Laboratorio 5 para el **grupo 3, 
 | PC-B | NIC | 192.168.10.32 | 255.255.255.0 | 192.168.10.1 |
 | PC-C | NIC | 192.168.15.32 | 255.255.255.0 | 192.168.15.1 |
 
-## Especificaciones de la asignacion de puertos de switch
+## Especificaciones de la asignación de puertos de switch
 
-| Switch | Puerto | Asignacion | Red |
+| Switch | Puerto | Asignación | Red |
 | --- | --- | --- | --- |
 | S1 | F0/1 | Enlace troncal 802.1Q | N/A |
 | S1 | F0/2 | Enlace troncal 802.1Q | N/A |
@@ -43,21 +44,42 @@ Esta pagina reune la informacion principal del Laboratorio 5 para el **grupo 3, 
 
 ## Diagramas
 
-### Topologia general
+### Topología general
 
 <DrawIoDiagram
 	url="https://drive.google.com/uc?id=1IF_mVsADYf5AoXLwbWye55jKp95XswPe&export=download"
 	openUrl="https://drive.google.com/file/d/1IF_mVsADYf5AoXLwbWye55jKp95XswPe/view?usp=sharing"
-	title="Laboratorio 5 - VLANs Grupo 3 Seccion 2"
+	title="Laboratorio 5 - VLANs Grupo 3 Sección 2"
 	height="720px"
 	toolbar="zoom layers tags lightbox"
 />
 
-### VLANs del grupo 3, seccion 2
+### Preguntas dentro del laboratorio
+
+Luego de realizar la práctica, resuelva estas preguntas con evidencias:
+
+<ProgressChecklist
+	title="Checklist de evidencias"
+	description="Use esta lista para verificar las capturas, pruebas y archivos que debe entregar."
+	items={[
+		{
+			label: '<strong>Pregunta 1:</strong> desconecte el cable entre S1 y S2. Conecte ese mismo cable entre S2 y S3 en puertos que antes no estaban en uso, por ejemplo F0/3 en cada switch. Ejecute show vlan brief en S2 y S3. Responda si ese nuevo puerto quedó como trunk automáticamente. Haga ping desde PC-B hacia PC-C, indique si funciona y adjunte capturas de pantalla.',
+			done: false,
+			html: true,
+		},
+		{
+			label: '<strong>Pregunta 2:</strong> suba los archivos de configuración de los switches y el router. Para exportar la configuración de cada dispositivo, copie el resultado del comando show running-config en un archivo de texto y adjunte una captura de pantalla de este comando.',
+			done: false,
+			html: true,
+		},
+	]}
+/>
+
+### VLANs del grupo 3, sección 2
 
 | VLAN | Nombre | Red | Host principal |
 | --- | --- | --- | --- |
-| 1 | Administracion | 192.168.1.0/24 | S1, S2, S3 |
+| 1 | Administración | 192.168.1.0/24 | S1, S2, S3 |
 | 5 | Estudiantes32 | 192.168.5.0/24 | PC-A |
 | 10 | Docentes32 | 192.168.10.0/24 | PC-B |
 | 15 | Administrativos32 | 192.168.15.0/24 | PC-C |
@@ -66,12 +88,12 @@ Esta pagina reune la informacion principal del Laboratorio 5 para el **grupo 3, 
 
 <PacketTracerDownloads
 	title="Descargas de Cisco Packet Tracer - Laboratorio 5"
-	description="Archivo de Packet Tracer para trabajar la practica de VLANs del grupo 3, seccion 2."
+	description="Archivo de Packet Tracer para trabajar la práctica de VLANs del grupo 3, sección 2."
 	items={[
 		{
 			title: 'Laboratorio 5 - VLANs',
 			href: '/cisco/VLANS.pkt',
-			description: 'Topologia para configurar VLANs, enlaces troncales y router-on-a-stick.',
+			description: 'Topología para configurar VLANs, enlaces troncales y router-on-a-stick.',
 		},
 	]}
 />
@@ -80,7 +102,7 @@ Esta pagina reune la informacion principal del Laboratorio 5 para el **grupo 3, 
 
 <PacketTracerDownloads
 	title="Capturas de Wireshark - Laboratorio 5"
-	description="Espacio reservado para publicar capturas de trafico del laboratorio cuando esten disponibles."
+	description="Espacio reservado para publicar capturas de tráfico del laboratorio cuando estén disponibles."
 	items={[]}
 	emptyMessage="No hay capturas de Wireshark disponibles en este momento."
 	downloadLabel="Descargar captura"
@@ -88,9 +110,7 @@ Esta pagina reune la informacion principal del Laboratorio 5 para el **grupo 3, 
 
 ## Comandos del Laboratorio 5
 
-Los siguientes comandos corresponden al grupo 3, seccion 2. Si el equipo usa `GigabitEthernet` en vez de `FastEthernet`, cambie `f0/x` por la interfaz real del dispositivo. Puede verificarlo con `show interfaces` o `show ip interface brief`.
-
-### Configuracion de PCs
+### Configuración de PCs
 
 #### PC-A
 
@@ -118,11 +138,11 @@ Default Gateway: 192.168.15.1
 
 ### R1
 
-Seleccione la interfaz fisica conectada al switch. El bloque se actualiza automaticamente y aplica el mismo nombre a las subinterfaces de las VLAN.
+Seleccione la interfaz física conectada al switch. El bloque se actualiza automáticamente y aplica el mismo nombre a las subinterfaces de las VLAN.
 
 <DynamicCiscoCommands
-	title="Comandos dinamicos para R1"
-	selectorHint="La seleccion se aplica a la interfaz fisica de R1 y a todas sus subinterfaces."
+	title="Comandos dinámicos para R1"
+	selectorHint="La selección se aplica a la interfaz física de R1 y a todas sus subinterfaces."
 	includeTitleOnCopy={false}
 	physicalOptions={[
 		{ label: 'G0/0', value: 'G0/' },
@@ -175,7 +195,7 @@ copy running-config startup-config
 	]}
 />
 
-#### Verificacion en R1
+#### Verificación en R1
 
 ```bash
 show ip interface brief
@@ -233,7 +253,7 @@ end
 copy running-config startup-config
 ```
 
-#### Verificacion en S1
+#### Verificación en S1
 
 ```bash
 show vlan brief
@@ -291,7 +311,7 @@ end
 copy running-config startup-config
 ```
 
-#### Verificacion en S2
+#### Verificación en S2
 
 ```bash
 show vlan brief
@@ -344,7 +364,7 @@ end
 copy running-config startup-config
 ```
 
-#### Verificacion en S3
+#### Verificación en S3
 
 ```bash
 show vlan brief
@@ -381,7 +401,7 @@ ping 192.168.10.32
 ping 192.168.1.1
 ```
 
-### Exportar configuracion para entrega
+### Exportar configuración para entrega
 
 En cada switch y en el router ejecute:
 
@@ -389,4 +409,4 @@ En cada switch y en el router ejecute:
 show running-config
 ```
 
-Copie el resultado en un archivo de texto y tome captura de pantalla, segun lo solicita el laboratorio.
+Copie el resultado en un archivo de texto y tome captura de pantalla, según lo solicita el laboratorio.

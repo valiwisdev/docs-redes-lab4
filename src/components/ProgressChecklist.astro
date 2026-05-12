@@ -2,6 +2,7 @@
 interface ChecklistItem {
 	label: string;
 	done?: boolean;
+	html?: boolean;
 }
 
 interface Props {
@@ -12,27 +13,92 @@ interface Props {
 
 const {
 	title = 'Checklist de avance',
-	description = 'Resumen rapido de lo que ya esta disponible en esta seccion.',
+	description = 'Resumen rápido de lo que ya está disponible en esta sección.',
 	items = [],
 } = Astro.props;
+
+const componentId = `progress-checklist-${Math.random().toString(36).slice(2, 10)}`;
+const storageKey = `progress-checklist:${title}:${items.map((item) => item.label).join('|')}`;
 ---
 
-<section class="progress-checklist" aria-labelledby="progress-checklist-title">
+<section
+	class="progress-checklist"
+	aria-labelledby={`${componentId}-title`}
+	data-progress-checklist
+	data-storage-key={storageKey}
+>
 	<div class="progress-checklist__header">
-		<h3 id="progress-checklist-title">{title}</h3>
+		<h3 id={`${componentId}-title`}>{title}</h3>
 		<p>{description}</p>
 	</div>
 
 	<ul class="progress-checklist__list">
-		{items.map((item) => (
-			<li class:list={['progress-checklist__item', item.done ? 'is-done' : 'is-pending']}>
-				<span class="progress-checklist__icon" aria-hidden="true">{item.done ? '✓' : '○'}</span>
-				<span class="progress-checklist__label">{item.label}</span>
+		{items.map((item, index) => (
+			<li
+				class:list={['progress-checklist__item', item.done ? 'is-done' : 'is-pending']}
+				data-checklist-item
+				data-index={index}
+			>
+				<input
+					class="progress-checklist__checkbox"
+					type="checkbox"
+					checked={item.done}
+					aria-label={`Marcar item ${index + 1}`}
+				/>
+				{item.html ? (
+					<span class="progress-checklist__label" set:html={item.label} />
+				) : (
+					<span class="progress-checklist__label">{item.label}</span>
+				)}
 				<span class="progress-checklist__status">{item.done ? 'Listo' : 'Pendiente'}</span>
 			</li>
 		))}
 	</ul>
 </section>
+
+<script>
+	const checklists = document.querySelectorAll('[data-progress-checklist]');
+
+	for (const checklist of checklists) {
+		const storageKey = checklist.getAttribute('data-storage-key') ?? '';
+		const items = Array.from(checklist.querySelectorAll('[data-checklist-item]'));
+
+		const applyState = (item, done) => {
+			const checkbox = item.querySelector('input[type="checkbox"]');
+			const status = item.querySelector('.progress-checklist__status');
+
+			item.classList.toggle('is-done', done);
+			item.classList.toggle('is-pending', !done);
+			if (checkbox) checkbox.checked = done;
+			if (status) status.textContent = done ? 'Listo' : 'Pendiente';
+		};
+
+		let saved = null;
+		try {
+			saved = JSON.parse(localStorage.getItem(storageKey) ?? 'null');
+		} catch {
+			saved = null;
+		}
+
+		items.forEach((item, index) => {
+			const checkbox = item.querySelector('input[type="checkbox"]');
+			if (!checkbox) return;
+
+			if (Array.isArray(saved) && typeof saved[index] === 'boolean') {
+				applyState(item, saved[index]);
+			}
+
+			checkbox.addEventListener('change', () => {
+				applyState(item, checkbox.checked);
+				const state = items.map((currentItem) => {
+					const currentCheckbox = currentItem.querySelector('input[type="checkbox"]');
+					return currentCheckbox?.checked ?? false;
+				});
+				localStorage.setItem(storageKey, JSON.stringify(state));
+			});
+		});
+	}
+</script>
 
 <style>
 	.progress-checklist {
@@ -84,15 +150,40 @@ const {
 		background: color-mix(in srgb, var(--sl-color-bg) 78%, transparent);
 	}
 
-	.progress-checklist__icon {
-		display: inline-flex;
-		align-items: center;
-		justify-content: center;
+	.progress-checklist__checkbox {
+		appearance: none;
+		display: grid;
+		place-items: center;
 		width: 1.6rem;
 		height: 1.6rem;
+		border: 2px solid #c27c19;
 		border-radius: 999px;
-		font-size: 0.95rem;
-		font-weight: 700;
+		background: color-mix(in srgb, #c27c19 12%, transparent);
+		cursor: pointer;
+	}
+
+	.progress-checklist__checkbox::after {
+		content: '';
+		width: 0.45rem;
+		height: 0.8rem;
+		border: solid white;
+		border-width: 0 2px 2px 0;
+		transform: rotate(45deg) scale(0);
+		transition: transform 120ms ease;
+	}
+
+	.progress-checklist__checkbox:checked {
+		border-color: #1f9d55;
+		background: #1f9d55;
+	}
+
+	.progress-checklist__checkbox:checked::after {
+		transform: rotate(45deg) scale(1);
+	}
+
+	.progress-checklist__checkbox:focus-visible {
+		outline: 3px solid var(--sl-color-text-accent);
+		outline-offset: 2px;
 	}
 
 	.progress-checklist__label {
@@ -107,19 +198,9 @@ const {
 		letter-spacing: 0.02em;
 	}
 
-	.progress-checklist__item.is-done .progress-checklist__icon {
-		background: color-mix(in srgb, #1f9d55 18%, transparent);
-		color: #1f9d55;
-	}
-
 	.progress-checklist__item.is-done .progress-checklist__status {
 		background: color-mix(in srgb, #1f9d55 18%, transparent);
 		color: #1f9d55;
-	}
-
-	.progress-checklist__item.is-pending .progress-checklist__icon {
-		background: color-mix(in srgb, #c27c19 18%, transparent);
-		color: #c27c19;
 	}
 
 	.progress-checklist__item.is-pending .progress-checklist__status {
