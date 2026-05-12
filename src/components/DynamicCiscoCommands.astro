@@ -1,4 +1,6 @@
 ---
+import { Code } from '@astrojs/starlight/components';
+
 interface PhysicalInterface {
 	id: string;
 	index: string;
@@ -20,7 +22,6 @@ interface Props {
 	blocks: RouterBlock[];
 	physicalOptions?: PhysicalOption[];
 	selectorHint?: string;
-	includeTitleOnCopy?: boolean;
 }
 
 const {
@@ -35,10 +36,17 @@ const {
 		{ label: 'S0/0/x', value: 'S0/0/' },
 	],
 	selectorHint = 'La misma selección se aplica a R1, R2 y R3.',
-	includeTitleOnCopy = true,
 } = Astro.props;
 
 const componentId = `dynamic-cisco-${Math.random().toString(36).slice(2, 10)}`;
+
+const renderTemplate = (template: string, physicalInterfaces: PhysicalInterface[], base: string) => {
+	let result = template;
+	for (const item of physicalInterfaces) {
+		result = result.replaceAll(`{{${item.id}}}`, `${base}${item.index}`);
+	}
+	return result.trim();
+};
 ---
 
 <section class="dynamic-cisco" data-dynamic-cisco-global id={componentId}>
@@ -53,42 +61,36 @@ const componentId = `dynamic-cisco-${Math.random().toString(36).slice(2, 10)}`;
 		<div class="dynamic-cisco__field-copy">
 			<div>
 				<div class="dynamic-cisco__field-label">Interfaz base global</div>
-				<div class="dynamic-cisco__hint">
-					{selectorHint}
-				</div>
+				<div class="dynamic-cisco__hint">{selectorHint}</div>
 			</div>
-			<div class="dynamic-cisco__select-wrap">
-				<select data-role="physical-base">
-					{physicalOptions.map((option, index) => (
-						<option value={option.value} selected={index === 0}>{option.label}</option>
-					))}
-				</select>
-			</div>
+			<select data-role="physical-base">
+				{physicalOptions.map((option, index) => (
+					<option value={option.value} selected={index === 0}>{option.label}</option>
+				))}
+			</select>
 		</div>
  	</div>
 
 	<div class="dynamic-cisco__blocks">
-		{blocks.map((block, blockIndex) => (
+		{blocks.map((block) => (
 			<section
 				class="dynamic-cisco__router"
 				data-router-block
-				data-template={block.template}
-				data-include-title-on-copy={includeTitleOnCopy ? 'true' : 'false'}
 			>
-				<div class="dynamic-cisco__router-header">
-					<h3>{block.title}</h3>
-					<button class="dynamic-cisco__copy" type="button" data-role="copy-router">
-						Copiar comandos
-					</button>
-				</div>
-				{block.physicalInterfaces.map((item) => (
-					<div
-						data-interface-id={item.id}
-						data-interface-index={item.index}
-						data-block-index={blockIndex}
-					></div>
-				))}
-				<pre class="dynamic-cisco__code"><code data-role="output"></code></pre>
+				<h3>{block.title}</h3>
+
+				{physicalOptions.map((option, index) => {
+					const renderedCode = renderTemplate(block.template, block.physicalInterfaces, option.value);
+					return (
+						<div
+							class="dynamic-cisco__code-variant"
+							data-code-variant={option.value}
+							hidden={index !== 0}
+						>
+							<Code code={renderedCode} lang="bash" />
+						</div>
+					);
+				})}
 			</section>
 		))}
 	</div>
@@ -105,54 +107,14 @@ const componentId = `dynamic-cisco-${Math.random().toString(36).slice(2, 10)}`;
 			const base = baseSelect?.value ?? 'Fa0/';
 
 			for (const routerBlock of routerBlocks) {
-				const template = routerBlock.getAttribute('data-template') ?? '';
-				const output = routerBlock.querySelector('[data-role="output"]');
-				const interfaces = routerBlock.querySelectorAll('[data-interface-id]');
-				let result = template;
-
-				for (const node of interfaces) {
-					const id = node.getAttribute('data-interface-id');
-					const index = node.getAttribute('data-interface-index');
-					if (!id || index === null) continue;
-					result = result.replaceAll(`{{${id}}}`, `${base}${index}`);
-				}
-
-				if (output) {
-					output.textContent = result.trim();
-				}
-			}
-		};
-
-		const copyRouter = async (routerBlock, button) => {
-			const title = routerBlock.querySelector('h3')?.textContent?.trim() ?? 'Router';
-			const body = routerBlock.querySelector('[data-role="output"]')?.textContent?.trim() ?? '';
-			const includeTitle = routerBlock.getAttribute('data-include-title-on-copy') !== 'false';
-			const text = includeTitle ? `${title}\n${body}`.trim() : body;
-			if (!text) return;
-
-			try {
-				await navigator.clipboard.writeText(text);
-				if (button) {
-					button.textContent = 'Copiado';
-					window.setTimeout(() => {
-						button.textContent = 'Copiar comandos';
-					}, 1600);
-				}
-			} catch {
-				if (button) {
-					button.textContent = 'No se pudo copiar';
-					window.setTimeout(() => {
-						button.textContent = 'Copiar comandos';
-					}, 1600);
+				const variants = routerBlock.querySelectorAll('[data-code-variant]');
+				for (const variant of variants) {
+					variant.hidden = variant.getAttribute('data-code-variant') !== base;
 				}
 			}
 		};
 
 		baseSelect?.addEventListener('change', render);
-		for (const routerBlock of routerBlocks) {
-			const button = routerBlock.querySelector('[data-role="copy-router"]');
-			button?.addEventListener('click', () => copyRouter(routerBlock, button));
-		}
 		render();
 	}
 </script>
@@ -194,28 +156,6 @@ const componentId = `dynamic-cisco-${Math.random().toString(36).slice(2, 10)}`;
 		color: var(--sl-color-gray-2);
 	}
 
-	.dynamic-cisco__copy {
-		min-height: 2.4rem;
-		padding: 0.55rem 0.9rem;
-		border: 1px solid var(--sl-color-gray-4);
-		border-radius: 0.75rem;
-		background: var(--sl-color-bg);
-		color: var(--sl-color-text);
-		font-weight: 600;
-		cursor: pointer;
-		transition: background 160ms ease, border-color 160ms ease;
-	}
-
-	.dynamic-cisco__copy:hover {
-		background: var(--sl-color-gray-6);
-		border-color: var(--sl-color-text-accent);
-	}
-
-	.dynamic-cisco__copy:focus-visible {
-		outline: 3px solid var(--sl-color-text-accent);
-		outline-offset: 2px;
-	}
-
 	.dynamic-cisco__field {
 		padding: 1rem;
 		margin: 1rem;
@@ -235,10 +175,6 @@ const componentId = `dynamic-cisco-${Math.random().toString(36).slice(2, 10)}`;
 		font-size: 0.95rem;
 		font-weight: 600;
 		margin-bottom: 0.25rem;
-	}
-
-	.dynamic-cisco__select-wrap {
-		position: relative;
 	}
 
 	.dynamic-cisco__field select {
@@ -271,41 +207,18 @@ const componentId = `dynamic-cisco-${Math.random().toString(36).slice(2, 10)}`;
 		background: var(--sl-color-bg-nav);
 	}
 
-	.dynamic-cisco__router-header {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		gap: 1rem;
-		margin-bottom: 0.75rem;
-		flex-wrap: wrap;
-	}
-
 	.dynamic-cisco__router h3 {
-		margin: 0;
+		margin: 0 0 0.75rem;
 		font-size: 1rem;
 	}
 
-	.dynamic-cisco__code {
-		margin: 0;
-		padding: 1rem;
-		border: 1px solid var(--sl-color-gray-5);
-		border-radius: 0.9rem;
-		background: var(--sl-color-gray-6);
-		overflow: auto;
-	}
-
-	.dynamic-cisco__code code {
-		font-family: var(--__sl-font-mono);
-		white-space: pre-wrap;
+	.dynamic-cisco__code-variant[hidden] {
+		display: none;
 	}
 
 	@media (max-width: 50rem) {
 		.dynamic-cisco__field-copy {
 			grid-template-columns: 1fr;
-		}
-
-		.dynamic-cisco__copy {
-			width: 100%;
 		}
 	}
 </style>
