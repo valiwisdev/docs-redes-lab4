@@ -19,6 +19,8 @@ interface Props {
 	title?: string;
 	blocks: RouterBlock[];
 	physicalOptions?: PhysicalOption[];
+	selectorHint?: string;
+	includeTitleOnCopy?: boolean;
 }
 
 const {
@@ -32,6 +34,8 @@ const {
 		{ label: 'G0/0/x', value: 'G0/0/' },
 		{ label: 'S0/0/x', value: 'S0/0/' },
 	],
+	selectorHint = 'La misma seleccion se aplica a R1, R2 y R3.',
+	includeTitleOnCopy = true,
 } = Astro.props;
 
 const componentId = `dynamic-cisco-${Math.random().toString(36).slice(2, 10)}`;
@@ -50,7 +54,7 @@ const componentId = `dynamic-cisco-${Math.random().toString(36).slice(2, 10)}`;
 			<div>
 				<div class="dynamic-cisco__field-label">Interfaz base global</div>
 				<div class="dynamic-cisco__hint">
-					La misma seleccion se aplica a R1, R2 y R3.
+					{selectorHint}
 				</div>
 			</div>
 			<div class="dynamic-cisco__select-wrap">
@@ -69,6 +73,7 @@ const componentId = `dynamic-cisco-${Math.random().toString(36).slice(2, 10)}`;
 				class="dynamic-cisco__router"
 				data-router-block
 				data-template={block.template}
+				data-include-title-on-copy={includeTitleOnCopy ? 'true' : 'false'}
 			>
 				<div class="dynamic-cisco__router-header">
 					<h3>{block.title}</h3>
@@ -121,7 +126,8 @@ const componentId = `dynamic-cisco-${Math.random().toString(36).slice(2, 10)}`;
 		const copyRouter = async (routerBlock, button) => {
 			const title = routerBlock.querySelector('h3')?.textContent?.trim() ?? 'Router';
 			const body = routerBlock.querySelector('[data-role="output"]')?.textContent?.trim() ?? '';
-			const text = `${title}\n${body}`.trim();
+			const includeTitle = routerBlock.getAttribute('data-include-title-on-copy') !== 'false';
+			const text = includeTitle ? `${title}\n${body}`.trim() : body;
 			if (!text) return;
 
 			try {

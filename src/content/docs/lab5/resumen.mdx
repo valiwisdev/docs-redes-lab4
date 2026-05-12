@@ -7,6 +7,7 @@ sidebar:
 
 import DrawIoDiagram from '../../../components/DrawIoDiagram.astro';
 import PacketTracerDownloads from '../../../components/PacketTracerDownloads.astro';
+import DynamicCiscoCommands from '../../../components/DynamicCiscoCommands.astro';
 
 ## Resumen del Laboratorio 5
 
@@ -117,7 +118,23 @@ Default Gateway: 192.168.15.1
 
 ### R1
 
-```bash
+Seleccione la interfaz fisica conectada al switch. El bloque se actualiza automaticamente y aplica el mismo nombre a las subinterfaces de las VLAN.
+
+<DynamicCiscoCommands
+	title="Comandos dinamicos para R1"
+	selectorHint="La seleccion se aplica a la interfaz fisica de R1 y a todas sus subinterfaces."
+	includeTitleOnCopy={false}
+	physicalOptions={[
+		{ label: 'G0/0', value: 'G0/' },
+		{ label: 'F0/0', value: 'F0/' },
+		{ label: 'Fa0/0', value: 'Fa0/' },
+		{ label: 'Gi0/0', value: 'Gi0/' },
+		{ label: 'G0/0/0', value: 'G0/0/' },
+	]}
+	blocks={[
+		{
+			title: 'R1',
+			template: `
 enable
 configure terminal
 hostname R1
@@ -126,33 +143,37 @@ line console 0
 logging synchronous
 exit
 
-interface g0/0
+interface {{TRUNK}}
 no shutdown
 exit
 
-interface g0/0.1
+interface {{TRUNK}}.1
 encapsulation dot1Q 1
 ip address 192.168.1.1 255.255.255.0
 exit
 
-interface g0/0.5
+interface {{TRUNK}}.5
 encapsulation dot1Q 5
 ip address 192.168.5.1 255.255.255.0
 exit
 
-interface g0/0.10
+interface {{TRUNK}}.10
 encapsulation dot1Q 10
 ip address 192.168.10.1 255.255.255.0
 exit
 
-interface g0/0.15
+interface {{TRUNK}}.15
 encapsulation dot1Q 15
 ip address 192.168.15.1 255.255.255.0
 exit
 
 end
 copy running-config startup-config
-```
+`,
+			physicalInterfaces: [{ id: 'TRUNK', index: '0' }],
+		},
+	]}
+/>
 
 #### Verificacion en R1
 
