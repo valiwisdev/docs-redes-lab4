@@ -202,9 +202,24 @@ show ip route
 show running-config
 ```
 
-### S1
+### Switches
 
-```bash
+Seleccione la familia de interfaz física de los switches. El bloque se actualiza automáticamente para los puertos troncales y de acceso de S1, S2 y S3.
+
+<DynamicCiscoCommands
+	title="Comandos dinámicos para switches"
+	selectorHint="La selección se aplica a los puertos físicos usados por S1, S2 y S3."
+	physicalOptions={[
+		{ label: 'F0/x', value: 'F0/' },
+		{ label: 'Fa0/x', value: 'Fa0/' },
+		{ label: 'G0/x', value: 'G0/' },
+		{ label: 'Gi0/x', value: 'Gi0/' },
+		{ label: 'G1/0/x', value: 'G1/0/' },
+	]}
+	blocks={[
+		{
+			title: 'S1',
+			template: `
 enable
 configure terminal
 hostname S1
@@ -232,17 +247,17 @@ vlan 15
 name Administrativos32
 exit
 
-interface f0/1
+interface {{S1_TRUNK_1}}
 switchport mode trunk
 no shutdown
 exit
 
-interface f0/2
+interface {{S1_TRUNK_2}}
 switchport mode trunk
 no shutdown
 exit
 
-interface f0/5
+interface {{S1_ACCESS}}
 switchport mode access
 switchport access vlan 5
 no shutdown
@@ -250,19 +265,16 @@ exit
 
 end
 copy running-config startup-config
-```
-
-#### Verificación en S1
-
-```bash
-show vlan brief
-show interfaces trunk
-show running-config
-```
-
-### S2
-
-```bash
+`,
+			physicalInterfaces: [
+				{ id: 'S1_TRUNK_1', index: '1' },
+				{ id: 'S1_TRUNK_2', index: '2' },
+				{ id: 'S1_ACCESS', index: '5' },
+			],
+		},
+		{
+			title: 'S2',
+			template: `
 enable
 configure terminal
 hostname S2
@@ -290,17 +302,17 @@ vlan 15
 name Administrativos32
 exit
 
-interface f0/1
+interface {{S2_TRUNK_1}}
 switchport mode trunk
 no shutdown
 exit
 
-interface f0/2
+interface {{S2_TRUNK_2}}
 switchport mode trunk
 no shutdown
 exit
 
-interface f0/10
+interface {{S2_ACCESS}}
 switchport mode access
 switchport access vlan 10
 no shutdown
@@ -308,19 +320,16 @@ exit
 
 end
 copy running-config startup-config
-```
-
-#### Verificación en S2
-
-```bash
-show vlan brief
-show interfaces trunk
-show running-config
-```
-
-### S3
-
-```bash
+`,
+			physicalInterfaces: [
+				{ id: 'S2_TRUNK_1', index: '1' },
+				{ id: 'S2_TRUNK_2', index: '2' },
+				{ id: 'S2_ACCESS', index: '10' },
+			],
+		},
+		{
+			title: 'S3',
+			template: `
 enable
 configure terminal
 hostname S3
@@ -348,12 +357,12 @@ vlan 15
 name Administrativos32
 exit
 
-interface f0/1
+interface {{S3_TRUNK}}
 switchport mode trunk
 no shutdown
 exit
 
-interface f0/15
+interface {{S3_ACCESS}}
 switchport mode access
 switchport access vlan 15
 no shutdown
@@ -361,9 +370,16 @@ exit
 
 end
 copy running-config startup-config
-```
+`,
+			physicalInterfaces: [
+				{ id: 'S3_TRUNK', index: '1' },
+				{ id: 'S3_ACCESS', index: '15' },
+			],
+		},
+	]}
+/>
 
-#### Verificación en S3
+#### Verificación en switches
 
 ```bash
 show vlan brief
